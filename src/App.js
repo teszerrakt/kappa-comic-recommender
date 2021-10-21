@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import algoliasearch from "algoliasearch/lite";
+import { useState } from "react";
+import { InstantSearch } from "react-instantsearch-dom";
+import ComicCard from "./Components/ComicCard";
+import NavBar from "./Components/NavBar";
+import UserPreferences from "./Components/UserPreferences";
 
-function App() {
+const searchClient = algoliasearch(
+  "R9Z2VSNEW5",
+  "e7f63a3c29920e4f24cd39fc93d68601"
+);
+
+const App = () => {
+  const [prefs, setPrefs] = useState([]); //user preferences (ratings)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <InstantSearch searchClient={searchClient} indexName="comics">
+      <NavBar />
+      <UserPreferences prefs={prefs} setPrefs={setPrefs} />
+      <div className="p-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+          <ComicCard setPrefs={setPrefs} prefs={prefs} />
+        </div>
+      </div>
+    </InstantSearch>
   );
-}
+};
 
 export default App;
