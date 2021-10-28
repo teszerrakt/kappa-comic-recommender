@@ -1,3 +1,5 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react";
 import { connectHits } from "react-instantsearch-dom";
 import ReactStars from "react-rating-stars-component";
@@ -46,6 +48,20 @@ const ComicCard = ({ hits, setPrefs, prefs }) => {
     }
   };
 
+  const handleTitle = (title) => {
+    let splitArr = title.split(" ");
+    if (splitArr.length > 5) {
+      let newTitle = "";
+      for (let i = 0; i < 5; i++) {
+        newTitle += splitArr[i] + " ";
+      }
+      newTitle = newTitle + " ...";
+      return newTitle;
+    } else {
+      return title;
+    }
+  };
+
   return (
     <Fragment>
       {hits.map((hit) => (
@@ -57,7 +73,7 @@ const ComicCard = ({ hits, setPrefs, prefs }) => {
               rel="noreferrer"
             >
               <img
-                className="object-cover object-top w-full duration-500 rounded-xl max-h-96 hover:opacity-50"
+                className="object-cover object-top w-full duration-500 rounded-xl sm:h-96 hover:opacity-50"
                 src={hit.imageUrl}
                 alt={hit.title}
               />
@@ -66,17 +82,24 @@ const ComicCard = ({ hits, setPrefs, prefs }) => {
           <div className="flex flex-col items-center">
             <div className="flex items-center h-16 ">
               <h1 className="p-2 text-lg font-bold text-center text-kappa-green">
-                {hit.title}
+                {handleTitle(hit.title)}
               </h1>
             </div>
-            <ReactStars
-              activeColor="#57946c"
-              count={5}
-              size={36}
-              onChange={(newRating) =>
-                handleRatingChange(hit.id, hit.title, newRating)
-              }
-            />
+            <div className="pb-2">
+              <ReactStars
+                count={5}
+                size={36}
+                emptyIcon={
+                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                }
+                filledIcon={
+                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                }
+                onChange={(newRating) =>
+                  handleRatingChange(hit.id, hit.title, newRating)
+                }
+              />
+            </div>
           </div>
         </div>
       ))}
