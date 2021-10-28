@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faStar, faMagic } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const UserPreferences = ({ prefs, setPrefs }) => {
@@ -9,30 +9,36 @@ const UserPreferences = ({ prefs, setPrefs }) => {
 
   const predict = (algorithm) => {
     axios
-      .post(`https://reqres.in/api/${algorithm}`, prefs)
+      .post(`http://127.0.0.1:5000/api/${algorithm}`, prefs)
       .then((response) => console.log(response));
   };
 
   const Button = ({ children, algorithm }) => (
     <button
-      className="p-2 text-2xl font-bold text-center duration-300 border border-kappa-black text-kappa-black bg-kappa-green rounded-xl hover:bg-kappa-black hover:border-kappa-green hover:text-kappa-green"
+      className="p-2 text-2xl font-bold text-center duration-300 border border-kappa-dark-gray text-kappa-dark-gray bg-kappa-green rounded-xl hover:bg-kappa-dark-gray hover:border-kappa-green hover:text-kappa-green"
       onClick={() => predict(algorithm)}
     >
+      <FontAwesomeIcon icon={faMagic} className="mr-2" />
       {children}
     </button>
   );
 
   return (
-    <div>
+    <div
+      className={`${prefs.length > 0 ? "block" : "hidden"} bg-kappa-dark-gray`}
+    >
       <div className="grid gap-2 p-4 md:grid-cols-2">
         {prefs.map((pref) => (
           <div
             key={pref.id}
             className="flex justify-between px-2 pb-2 border-b text-kappa-green border-kappa-green"
           >
-            <span className="">
-              {pref.title} | {pref.rating}
-            </span>
+            <div>
+              <span className="">
+                {pref.title} | {pref.rating}
+              </span>
+              <FontAwesomeIcon className="ml-1" icon={faStar} />
+            </div>
             <FontAwesomeIcon
               className="text-2xl duration-300 cursor-pointer text-kappa-gray hover:text-kappa-green"
               icon={faTimes}
