@@ -1,22 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faStar, faMagic } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
-const UserPreferences = ({ prefs, setPrefs }) => {
+const UserPreferences = ({ prefs, setPrefs, setAlgorithm }) => {
   const handleDelete = (id) => () => {
     setPrefs((chips) => chips.filter((chip) => chip.id !== id));
-  };
-
-  const predict = (algorithm) => {
-    axios
-      .post(`http://127.0.0.1:5000/api/${algorithm}`, prefs)
-      .then((response) => console.log(response));
   };
 
   const Button = ({ children, algorithm }) => (
     <button
       className="p-2 text-2xl font-bold text-center duration-300 border border-kappa-dark-gray text-kappa-dark-gray bg-kappa-green rounded-xl hover:bg-kappa-dark-gray hover:border-kappa-green hover:text-kappa-green"
-      onClick={() => predict(algorithm)}
+      onClick={() => setAlgorithm(algorithm)}
     >
       <FontAwesomeIcon icon={faMagic} className="mr-2" />
       {children}
@@ -52,8 +46,12 @@ const UserPreferences = ({ prefs, setPrefs }) => {
           prefs.length >= 5 ? "flex" : "hidden"
         } justify-center gap-2 p-2`}
       >
-        <Button algorithm="kmeans">K-Means</Button>
-        <Button algorithm="dbscan">DBSCAN</Button>
+        <Link to="/kmeans">
+          <Button algorithm="kmeans">K-Means</Button>
+        </Link>
+        <Link to="/dbscan">
+          <Button algorithm="dbscan">DBSCAN</Button>
+        </Link>
       </div>
     </div>
   );

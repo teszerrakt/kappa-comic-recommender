@@ -14,6 +14,7 @@ const NavBar = () => {
           kappa
         </h1>
       </div>
+
       <SearchBox />
     </div>
   );
