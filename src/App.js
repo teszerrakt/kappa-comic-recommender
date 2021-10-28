@@ -4,6 +4,7 @@ import { InstantSearch } from "react-instantsearch-dom";
 import ComicCard from "./Components/ComicCard";
 import NavBar from "./Components/NavBar";
 import UserPreferences from "./Components/UserPreferences";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const searchClient = algoliasearch(
   "R9Z2VSNEW5",
