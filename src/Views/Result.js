@@ -38,6 +38,7 @@ const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
           error: true,
         });
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   if (prediction.error) {
