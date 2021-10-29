@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Views/Home";
 import Result from "./Views/Result";
+import Footer from "./Components/Footer";
 
 const App = () => {
   const [prefs, setPrefs] = useState([]); //user preferences (ratings)
@@ -31,6 +32,7 @@ const App = () => {
           />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 };
