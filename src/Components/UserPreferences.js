@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faStar, faMagic } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const UserPreferences = ({ prefs, setPrefs, setAlgorithm }) => {
+const UserPreferences = ({ prefs, setPrefs, algo, setAlgorithm }) => {
   const handleDelete = (id) => () => {
     setPrefs((chips) => chips.filter((chip) => chip.id !== id));
   };
@@ -46,10 +46,13 @@ const UserPreferences = ({ prefs, setPrefs, setAlgorithm }) => {
           prefs.length >= 5 ? "flex" : "hidden"
         } justify-center gap-2 p-2`}
       >
-        <Link to="/kmeans">
+        <Link
+          to="/kmeans"
+          className={`${algo === "kmeans" ? "hidden" : "inline-block"}`}
+        >
           <Button algorithm="kmeans">K-Means</Button>
         </Link>
-        <Link to="/dbscan">
+        <Link to="/dbscan" className={`${algo === "dbscan" && "hidden"}`}>
           <Button algorithm="dbscan">DBSCAN</Button>
         </Link>
       </div>

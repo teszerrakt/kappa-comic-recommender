@@ -69,6 +69,7 @@ const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
       <UserPreferences
         prefs={prefs}
         setPrefs={setPrefs}
+        algo={algorithm}
         setAlgorithm={setAlgorithm}
       />
       {content}
