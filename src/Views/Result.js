@@ -51,7 +51,7 @@ const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
 
   if (prediction.data) {
     content = (
-      <div className="p-4">
+      <div className="p-4 pb-10">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           <PredictionCard
             setPrefs={setPrefs}
