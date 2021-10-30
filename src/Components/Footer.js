@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="bottom-0 flex justify-center w-full bg-kappa-dark-gray text-kappa-gray">
+    <div className="absolute bottom-0 flex justify-center w-full bg-kappa-dark-gray text-kappa-gray">
       <h1 className="py-4 text-xl">
         Made with ❤️ by{" "}
         <a

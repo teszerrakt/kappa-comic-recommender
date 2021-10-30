@@ -10,29 +10,35 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home prefs={prefs} setPrefs={setPrefs} setAlgorithm={setAlgorithm} />
-          ;
-        </Route>
-        <Route path="/kmeans">
-          <Result
-            prefs={prefs}
-            setPrefs={setPrefs}
-            algorithm={algorithm}
-            setAlgorithm={setAlgorithm}
-          />
-        </Route>
-        <Route path="/dbscan">
-          <Result
-            prefs={prefs}
-            setPrefs={setPrefs}
-            algorithm={algorithm}
-            setAlgorithm={setAlgorithm}
-          />
-        </Route>
-      </Switch>
-      <Footer />
+      <div className="relative min-h-screen pb-10">
+        <Switch>
+          <Route exact path="/">
+            <Home
+              prefs={prefs}
+              setPrefs={setPrefs}
+              setAlgorithm={setAlgorithm}
+            />
+            ;
+          </Route>
+          <Route path="/kmeans">
+            <Result
+              prefs={prefs}
+              setPrefs={setPrefs}
+              algorithm={algorithm}
+              setAlgorithm={setAlgorithm}
+            />
+          </Route>
+          <Route path="/dbscan">
+            <Result
+              prefs={prefs}
+              setPrefs={setPrefs}
+              algorithm={algorithm}
+              setAlgorithm={setAlgorithm}
+            />
+          </Route>
+        </Switch>
+        <Footer />
+      </div>
     </Router>
   );
 };
