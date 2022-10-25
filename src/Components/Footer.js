@@ -4,7 +4,7 @@ const Footer = () => {
       <h1 className="py-4 text-xl">
         Made with ❤️ by{" "}
         <a
-          href="http://zsyihab.tech"
+          href="http://zsyihab.codes"
           className="text-kappa-green"
           target="_blank"
           rel="noreferrer"
