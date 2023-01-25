@@ -6,7 +6,8 @@ import axios from "axios";
 import PredictionCard from "../Components/PredictionCard";
 
 const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
-  const url = `https://kappa-api-2cz8r.ondigitalocean.app/api/${algorithm}`;
+  // TODO: put this to .env
+  const url = `http://kappa-api.zsyihab.codes/api/${algorithm}`;
   const [prediction, setPrediction] = useState({
     loading: false,
     data: null,

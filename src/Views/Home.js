@@ -4,6 +4,7 @@ import NavBar from "../Components/NavBar";
 import UserPreferences from "../Components/UserPreferences";
 import algoliasearch from "algoliasearch/lite";
 
+// TODO: put this to .env
 const searchClient = algoliasearch(
   "R9Z2VSNEW5",
   "e7f63a3c29920e4f24cd39fc93d68601"
