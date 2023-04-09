@@ -3,11 +3,9 @@ import ComicCard from "../Components/ComicCard";
 import NavBar from "../Components/NavBar";
 import UserPreferences from "../Components/UserPreferences";
 import algoliasearch from "algoliasearch/lite";
+import { ALGOLIA_API_KEY, ALGOLIA_APP_ID } from "../env";
 
-const searchClient = algoliasearch(
-  "R9Z2VSNEW5",
-  "e7f63a3c29920e4f24cd39fc93d68601"
-);
+const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
 
 const Home = ({ prefs, setPrefs, setAlgorithm }) => {
   return (

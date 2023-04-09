@@ -4,9 +4,10 @@ import UserPreferences from "../Components/UserPreferences";
 import Loading from "../Components/Loading";
 import axios from "axios";
 import PredictionCard from "../Components/PredictionCard";
+import { KAPPA_API_URL } from "../env";
 
 const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
-  const url = `https://kappa-api-2cz8r.ondigitalocean.app/api/${algorithm}`;
+  const url = `${KAPPA_API_URL}/api/${algorithm}`;
   const [prediction, setPrediction] = useState({
     loading: false,
     data: null,
