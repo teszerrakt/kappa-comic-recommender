@@ -45,8 +45,9 @@ const TutorialModal = ({ isVisible, onClose }) => {
           alt="kappa"
         />
         <p className="px-2 mt-4 text-center text-kappa-gray">
-          To get your comic recommendation, please rate at least five titles and
-          then you can click K-Means or DBSCAN buttons that will appear.
+          To get your comic recommendation, please rate at least{" "}
+          <b className="text-kappa-green">five titles</b> and then you can click
+          K-Means or DBSCAN buttons that will appear.
         </p>
       </div>
     </Modal>
