@@ -1,5 +1,7 @@
 import Modal from "./Modal";
 import kappa from "../kappa.png";
+import useStorage from "../Hooks/useStorage";
+import { SESSION_STORAGE } from "../constant";
 
 const Header = () => (
   <>
@@ -19,12 +21,22 @@ const Footer = ({ onClose }) => (
 );
 
 const TutorialModal = ({ isVisible, onClose }) => {
+  const [isModalShownOnce, setIsModalShownOnce] = useStorage(
+    SESSION_STORAGE.SHOW_TUTORIAL_MODAL,
+    false
+  );
+
+  const handleClose = () => {
+    setIsModalShownOnce(true);
+    onClose();
+  };
+
   return (
     <Modal
-      isVisible={isVisible}
+      isVisible={isVisible && !isModalShownOnce}
       header={<Header />}
-      footer={<Footer onClose={onClose} />}
-      onClose={onClose}
+      footer={<Footer onClose={handleClose} />}
+      onClose={handleClose}
     >
       <div className="flex flex-col justify-center my-4">
         <img
