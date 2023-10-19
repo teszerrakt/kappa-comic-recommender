@@ -2,6 +2,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react";
 import ReactStars from "react-rating-stars-component";
+import Image from "./Image";
 
 const PredictionCard = ({ hits, prefs, setPrefs }) => {
   const handleTitle = (title) => {
@@ -71,7 +72,7 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
               target="_blank"
               rel="noreferrer"
             >
-              <img
+              <Image
                 className="object-cover object-top w-full duration-500 rounded-xl sm:h-96 hover:opacity-50"
                 src={hit.image_url}
                 alt={hit.title}

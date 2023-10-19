@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react";
 import { connectHits } from "react-instantsearch-dom";
 import ReactStars from "react-rating-stars-component";
+import Image from "./Image";
 
 const ComicCard = ({ hits, setPrefs, prefs }) => {
   const addItem = (id, title, newRating) => {
@@ -72,7 +73,7 @@ const ComicCard = ({ hits, setPrefs, prefs }) => {
               target="_blank"
               rel="noreferrer"
             >
-              <img
+              <Image
                 className="object-cover object-top w-full duration-500 rounded-xl sm:h-96 hover:opacity-50"
                 src={hit.imageUrl}
                 alt={hit.title}

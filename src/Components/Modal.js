@@ -15,7 +15,7 @@ const Modal = ({ isVisible, header, footer, children, onClose }) => {
         onClick={onClose}
       >
         <div
-          className="w-3/4 max-w-[500px] bg-kappa-dark-gray rounded-xl p-4 shadow-xl"
+          className="w-3/4 max-w-[500px] bg-kappa-dark-gray rounded-xl p-4 shadow-xl border border-kappa-green drop-shadow"
           onClick={(event) => event.stopPropagation()}
         >
           {header && <>{header}</>}

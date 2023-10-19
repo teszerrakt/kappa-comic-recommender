@@ -1,4 +1,4 @@
-import kappa from "../kappa.png";
+import kappa from "../Assets/kappa.png";
 
 const Loading = () => {
   return (

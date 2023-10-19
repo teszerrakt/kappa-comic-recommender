@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import kappa from "../kappa.png";
+import kappa from "../Assets/kappa.png";
 import useStorage from "../Hooks/useStorage";
 import { SESSION_STORAGE } from "../constant";
 

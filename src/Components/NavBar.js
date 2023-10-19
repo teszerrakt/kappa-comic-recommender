@@ -1,5 +1,5 @@
 import SearchBox from "./SearchBox";
-import kappa from "../kappa.png";
+import kappa from "../Assets/kappa.png";
 
 const NavBar = () => {
   return (
