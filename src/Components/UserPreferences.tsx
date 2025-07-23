@@ -1,6 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faStar, faMagic } from "@fortawesome/free-solid-svg-icons";
+import { X, Star, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 import { UserPreference, Algorithm } from "../types";
 
 interface UserPreferencesProps {
@@ -10,7 +11,7 @@ interface UserPreferencesProps {
   setAlgorithm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface ButtonProps {
+interface AlgorithmButtonProps {
   children: React.ReactNode;
   algorithm: Algorithm;
 }
@@ -20,56 +21,63 @@ const UserPreferences: React.FC<UserPreferencesProps> = ({ prefs, setPrefs, algo
     setPrefs((chips) => chips.filter((chip) => chip.id !== id));
   };
 
-  const Button: React.FC<ButtonProps> = ({ children, algorithm }) => (
-    <button
-      className="p-2 text-2xl font-bold text-center duration-300 border border-kappa-dark-gray text-kappa-dark-gray bg-kappa-green rounded-xl hover:bg-kappa-dark-gray hover:border-kappa-green hover:text-kappa-green"
+  const AlgorithmButton: React.FC<AlgorithmButtonProps> = ({ children, algorithm }) => (
+    <Button
+      variant="outline"
+      size="lg"
+      className="text-lg text-kappa-green bg-transparent border-kappa-green hover:bg-kappa-green hover:text-kappa-black transition-colors"
       onClick={() => setAlgorithm(algorithm)}
     >
-      <FontAwesomeIcon icon={faMagic} className="mr-2" />
+      <Sparkles className="mr-2 h-5 w-5" />
       {children}
-    </button>
+    </Button>
   );
 
   return (
-    <div
-      className={`${prefs.length > 0 ? "block" : "hidden"} bg-kappa-dark-gray`}
+    <Card
+      className={`${prefs.length > 0 ? "block" : "hidden"} bg-kappa-dark-gray border-kappa-gray/30`}
     >
-      <div className="grid gap-2 p-4 md:grid-cols-2">
-        {prefs.map((pref) => (
-          <div
-            key={pref.id}
-            className="flex justify-between px-2 pb-2 border-b text-kappa-green border-kappa-green"
-          >
-            <div>
-              <span className="">
-                {pref.title} | {pref.rating}
-              </span>
-              <FontAwesomeIcon className="ml-1" icon={faStar} />
+      <CardContent className="p-4">
+        <div className="grid gap-2 md:grid-cols-2">
+          {prefs.map((pref) => (
+            <div
+              key={pref.id}
+              className="flex justify-between items-center px-3 py-2 bg-kappa-black/30 rounded-lg border border-kappa-green/20"
+            >
+              <div className="flex items-center text-kappa-green">
+                <span className="">
+                  {pref.title} | {pref.rating}
+                </span>
+                <Star className="ml-2 h-4 w-4 fill-kappa-green" />
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-kappa-gray hover:text-kappa-green hover:bg-kappa-green/10 p-1 h-auto"
+                onClick={handleDelete(pref.id)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
-            <FontAwesomeIcon
-              className="text-2xl duration-300 cursor-pointer text-kappa-gray hover:text-kappa-green"
-              icon={faTimes}
-              onClick={handleDelete(pref.id)}
-            />
-          </div>
-        ))}
-      </div>
-      <div
-        className={`${
-          prefs.length >= 5 ? "flex" : "hidden"
-        } justify-center gap-2 p-2`}
-      >
-        <Link
-          to="/results?algorithm=kmeans"
-          className={`${algo === "kmeans" ? "hidden" : "inline-block"}`}
+          ))}
+        </div>
+        <div
+          className={`${
+            prefs.length >= 5 ? "flex" : "hidden"
+          } justify-center gap-4 mt-4 pt-4 border-t border-kappa-green/20`}
         >
-          <Button algorithm="kmeans">K-Means</Button>
-        </Link>
-        <Link to="/results?algorithm=dbscan" className={`${algo === "dbscan" && "hidden"}`}>
-          <Button algorithm="dbscan">DBSCAN</Button>
-        </Link>
-      </div>
-    </div>
+          <Link
+            to="/results?algorithm=kmeans"
+            className={`${algo === "kmeans" ? "hidden" : "inline-block"}`}
+          >
+            <AlgorithmButton algorithm="kmeans">K-Means</AlgorithmButton>
+          </Link>
+          <Link to="/results?algorithm=dbscan" className={`${algo === "dbscan" && "hidden"}`}>
+            <AlgorithmButton algorithm="dbscan">DBSCAN</AlgorithmButton>
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

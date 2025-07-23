@@ -1,11 +1,25 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Star } from "lucide-react";
 import { Fragment } from "react";
 import ReactStars from "react-rating-stars-component";
+import { Card, CardContent } from "./ui/card";
 import Image from "./Image";
+import { UserPreference } from "../types";
 
-const PredictionCard = ({ hits, prefs, setPrefs }) => {
-  const handleTitle = (title) => {
+interface PredictionHit {
+  id: string;
+  title: string;
+  image_url: string;
+  rating: number;
+}
+
+interface PredictionCardProps {
+  hits: PredictionHit[];
+  prefs: UserPreference[];
+  setPrefs: React.Dispatch<React.SetStateAction<UserPreference[]>>;
+}
+
+const PredictionCard: React.FC<PredictionCardProps> = ({ hits, prefs, setPrefs }) => {
+  const handleTitle = (title: string): string => {
     let splitArr = title.split(" ");
     if (splitArr.length > 5) {
       let newTitle = "";
@@ -19,7 +33,7 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
     }
   };
 
-  const addItem = (id, title, newRating) => {
+  const addItem = (id: string, title: string, newRating: number): void => {
     const newItem = {
       id: id,
       title: title,
@@ -28,7 +42,7 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
     setPrefs((prevItems) => [...prevItems, newItem]);
   };
 
-  const handleUpdate = (id, newRating) => {
+  const handleUpdate = (id: string, newRating: number): void => {
     const newList = prefs.map((pref) => {
       if (pref.id === id) {
         const updatedItem = {
@@ -45,7 +59,7 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
     setPrefs(newList);
   };
 
-  const handleRatingChange = (id, title, newRating) => {
+  const handleRatingChange = (id: string, title: string, newRating: number): void => {
     let isExists = false;
     prefs.map((pref) => {
       if (pref.id === id) {
@@ -65,8 +79,8 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
   return (
     <Fragment>
       {hits.map((hit) => (
-        <div key={hit.id} className="bg-kappa-dark-gray rounded-xl">
-          <div className="p-2">
+        <Card key={hit.id} className="bg-kappa-dark-gray border-kappa-gray/20 hover:border-kappa-green/50 transition-colors">
+          <CardContent className="p-2">
             <a
               href={`https://myanimelist.net/manga/${hit.id}`}
               target="_blank"
@@ -78,9 +92,9 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
                 alt={hit.title}
               />
             </a>
-          </div>
+          </CardContent>
           <div className="flex flex-col items-center">
-            <div className="flex items-center h-16 ">
+            <div className="flex items-center h-16">
               <h1 className="p-2 text-lg font-bold text-center text-kappa-green">
                 {handleTitle(hit.title)}
               </h1>
@@ -91,10 +105,10 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
                 size={36}
                 value={hit.rating}
                 emptyIcon={
-                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                  <Star className="mx-0.5 text-2xl fill-transparent stroke-kappa-gray" />
                 }
                 filledIcon={
-                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                  <Star className="mx-0.5 text-2xl fill-kappa-green stroke-kappa-green" />
                 }
                 onChange={(newRating) =>
                   handleRatingChange(hit.id, hit.title, newRating)
@@ -102,7 +116,7 @@ const PredictionCard = ({ hits, prefs, setPrefs }) => {
               />
             </div>
           </div>
-        </div>
+        </Card>
       ))}
     </Fragment>
   );

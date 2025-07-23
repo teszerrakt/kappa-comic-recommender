@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 type StorageType = "session" | "local";
 
-const useStorage = <T>(
+const useStorage = <T,>(
   key: string, 
   defaultValue: T, 
   storageType: StorageType = "session"

@@ -1,8 +1,8 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Star } from "lucide-react";
 import { Fragment } from "react";
 import { useHits } from "react-instantsearch";
 import ReactStars from "react-rating-stars-component";
+import { Card, CardContent } from "./ui/card";
 import Image from "./Image";
 import { UserPreference, ComicHit } from "../types";
 
@@ -74,8 +74,8 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
   return (
     <Fragment>
       {hits.map((hit) => (
-        <div key={hit.id} className="bg-kappa-dark-gray rounded-xl">
-          <div className="p-2">
+        <Card key={hit.id} className="bg-kappa-dark-gray border-kappa-gray/20 hover:border-kappa-green/50 transition-colors">
+          <CardContent className="p-2">
             <a
               href={`https://myanimelist.net/manga/${hit.id}`}
               target="_blank"
@@ -87,9 +87,9 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
                 alt={hit.title}
               />
             </a>
-          </div>
+          </CardContent>
           <div className="flex flex-col items-center">
-            <div className="flex items-center h-16 ">
+            <div className="flex items-center h-16">
               <h1 className="p-2 text-lg font-bold text-center text-kappa-green">
                 {handleTitle(hit.title)}
               </h1>
@@ -99,10 +99,10 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
                 count={5}
                 size={36}
                 emptyIcon={
-                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                  <Star className="mx-0.5 text-2xl fill-transparent stroke-kappa-gray" />
                 }
                 filledIcon={
-                  <FontAwesomeIcon className="mx-0.5 text-2xl" icon={faStar} />
+                  <Star className="mx-0.5 text-2xl fill-kappa-green stroke-kappa-green" />
                 }
                 onChange={(newRating) =>
                   handleRatingChange(hit.id, hit.title, newRating)
@@ -110,7 +110,7 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
               />
             </div>
           </div>
-        </div>
+        </Card>
       ))}
     </Fragment>
   );
