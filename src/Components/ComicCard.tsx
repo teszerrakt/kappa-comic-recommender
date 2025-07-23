@@ -12,7 +12,7 @@ interface ComicCardProps {
 
 const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
   const { hits } = useHits<ComicHit>();
-  
+
   const addItem = (id: string, title: string, newRating: number): void => {
     const newItem = {
       id: id,
@@ -39,7 +39,11 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
     setPrefs(newList);
   };
 
-  const handleRatingChange = (id: string, title: string, newRating: number): void => {
+  const handleRatingChange = (
+    id: string,
+    title: string,
+    newRating: number,
+  ): void => {
     let isExists = false;
     prefs.map((pref) => {
       if (pref.id === id) {
@@ -73,7 +77,10 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
   return (
     <Fragment>
       {hits.map((hit) => (
-        <Card key={hit.id} className="bg-kappa-dark-gray border-kappa-gray/20 hover:border-kappa-green/50 transition-colors">
+        <Card
+          key={hit.id}
+          className="bg-kappa-dark-gray border-kappa-gray/20 hover:border-kappa-green/50 transition-colors"
+        >
           <CardContent className="p-2">
             <a
               href={`https://myanimelist.net/manga/${hit.id}`}
@@ -93,9 +100,9 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
                 {handleTitle(hit.title)}
               </h1>
             </div>
-            <div className="pb-2">
+            <div className="pb-4">
               <StarRating
-                rating={prefs.find(pref => pref.id === hit.id)?.rating || 0}
+                rating={prefs.find((pref) => pref.id === hit.id)?.rating || 0}
                 size="lg"
                 onRatingChange={(newRating) =>
                   handleRatingChange(hit.id, hit.title, newRating)
