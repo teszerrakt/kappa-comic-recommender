@@ -15,10 +15,15 @@ interface ResultProps {
   setAlgorithm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
+const Result: React.FC<ResultProps> = ({
+  prefs,
+  setPrefs,
+  algorithm,
+  setAlgorithm,
+}) => {
   const [searchParams] = useSearchParams();
-  const algorithmFromUrl = searchParams.get('algorithm') || algorithm;
-  
+  const algorithmFromUrl = searchParams.get("algorithm") || algorithm;
+
   // Update algorithm state when URL changes
   useEffect(() => {
     if (algorithmFromUrl && algorithmFromUrl !== algorithm) {
@@ -41,7 +46,7 @@ const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorith
       data: null,
       error: false,
     });
-    
+
     axios
       .post<PredictionResponse[]>(url, prefs)
       .then((response: AxiosResponse<PredictionResponse[]>) => {
@@ -74,7 +79,7 @@ const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorith
   if (prediction.data) {
     content = (
       <div className="p-4 pb-10">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 ">
           <PredictionCard
             setPrefs={setPrefs}
             prefs={prefs}
