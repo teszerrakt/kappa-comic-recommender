@@ -1,8 +1,7 @@
-import { Star } from "lucide-react";
 import { Fragment } from "react";
 import { useHits } from "react-instantsearch";
-import ReactStars from "react-rating-stars-component";
 import { Card, CardContent } from "./ui/card";
+import { StarRating } from "./ui/star-rating";
 import Image from "./Image";
 import { UserPreference, ComicHit } from "../types";
 
@@ -95,16 +94,10 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
               </h1>
             </div>
             <div className="pb-2">
-              <ReactStars
-                count={5}
-                size={36}
-                emptyIcon={
-                  <Star className="mx-0.5 text-2xl fill-transparent stroke-kappa-gray" />
-                }
-                filledIcon={
-                  <Star className="mx-0.5 text-2xl fill-kappa-green stroke-kappa-green" />
-                }
-                onChange={(newRating) =>
+              <StarRating
+                rating={prefs.find(pref => pref.id === hit.id)?.rating || 0}
+                size="lg"
+                onRatingChange={(newRating) =>
                   handleRatingChange(hit.id, hit.title, newRating)
                 }
               />

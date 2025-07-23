@@ -1,7 +1,6 @@
-import { Star } from "lucide-react";
 import { Fragment } from "react";
-import ReactStars from "react-rating-stars-component";
 import { Card, CardContent } from "./ui/card";
+import { StarRating } from "./ui/star-rating";
 import Image from "./Image";
 import { UserPreference } from "../types";
 
@@ -100,17 +99,10 @@ const PredictionCard: React.FC<PredictionCardProps> = ({ hits, prefs, setPrefs }
               </h1>
             </div>
             <div className="pb-2">
-              <ReactStars
-                count={5}
-                size={36}
-                value={hit.rating}
-                emptyIcon={
-                  <Star className="mx-0.5 text-2xl fill-transparent stroke-kappa-gray" />
-                }
-                filledIcon={
-                  <Star className="mx-0.5 text-2xl fill-kappa-green stroke-kappa-green" />
-                }
-                onChange={(newRating) =>
+              <StarRating
+                rating={hit.rating}
+                size="lg"
+                onRatingChange={(newRating) =>
                   handleRatingChange(hit.id, hit.title, newRating)
                 }
               />
