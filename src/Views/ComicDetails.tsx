@@ -5,6 +5,7 @@ import { Button } from "../Components/ui/button";
 import { Badge } from "../Components/ui/badge";
 import Image from "../Components/Image";
 import Loading from "../Components/Loading";
+import NavBar from "../Components/NavBar";
 import { useMangaDetails } from "../Hooks/useMangaDetails";
 import { MangaData } from "../types";
 
@@ -70,7 +71,8 @@ const ComicDetails: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-kappa-black text-white">
-      <div className="container mx-auto px-4 py-8">
+      <NavBar showSearch={false} />
+      <div className="mx-auto px-4 py-8">
         {/* Header with back button */}
         <div className="mb-6">
           <Button

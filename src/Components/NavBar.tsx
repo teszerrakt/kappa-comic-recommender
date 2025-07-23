@@ -1,7 +1,11 @@
 import SearchBox from "./SearchBox";
 import kappa from "../Assets/kappa.png";
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  showSearch?: boolean;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ showSearch = true }) => {
   return (
     <div className="flex items-center justify-between p-4 text-kappa-gray bg-kappa-dark-gray">
       <div className="flex items-center">
@@ -15,7 +19,7 @@ const NavBar: React.FC = () => {
         </h1>
       </div>
 
-      <SearchBox />
+      {showSearch && <SearchBox />}
     </div>
   );
 };
