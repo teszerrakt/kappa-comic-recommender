@@ -1,12 +1,11 @@
 module.exports = {
-  mode: "jit",
-  purge: [
+  content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
-    "./src/Components/*.{js,jsx}",
-    "./src/Views/*.{js,jsx}",
+    "./index.html",
+    "./src/Components/*.{js,jsx,ts,tsx}",
+    "./src/Views/*.{js,jsx,ts,tsx}",
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media',
   theme: {
     fontFamily: {
       nunito: ["nunito", "sans-serif"],

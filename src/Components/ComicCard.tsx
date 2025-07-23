@@ -4,10 +4,17 @@ import { Fragment } from "react";
 import { useHits } from "react-instantsearch";
 import ReactStars from "react-rating-stars-component";
 import Image from "./Image";
+import { UserPreference, ComicHit } from "../types";
 
-const ComicCard = ({ setPrefs, prefs }) => {
-  const { hits } = useHits();
-  const addItem = (id, title, newRating) => {
+interface ComicCardProps {
+  setPrefs: React.Dispatch<React.SetStateAction<UserPreference[]>>;
+  prefs: UserPreference[];
+}
+
+const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
+  const { hits } = useHits<ComicHit>();
+  
+  const addItem = (id: string, title: string, newRating: number): void => {
     const newItem = {
       id: id,
       title: title,
@@ -16,7 +23,7 @@ const ComicCard = ({ setPrefs, prefs }) => {
     setPrefs((prevItems) => [...prevItems, newItem]);
   };
 
-  const handleUpdate = (id, newRating) => {
+  const handleUpdate = (id: string, newRating: number): void => {
     const newList = prefs.map((pref) => {
       if (pref.id === id) {
         const updatedItem = {
@@ -33,7 +40,7 @@ const ComicCard = ({ setPrefs, prefs }) => {
     setPrefs(newList);
   };
 
-  const handleRatingChange = (id, title, newRating) => {
+  const handleRatingChange = (id: string, title: string, newRating: number): void => {
     let isExists = false;
     prefs.map((pref) => {
       if (pref.id === id) {
@@ -50,7 +57,7 @@ const ComicCard = ({ setPrefs, prefs }) => {
     }
   };
 
-  const handleTitle = (title) => {
+  const handleTitle = (title: string): string => {
     let splitArr = title.split(" ");
     if (splitArr.length > 5) {
       let newTitle = "";

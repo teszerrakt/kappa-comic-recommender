@@ -1,7 +1,7 @@
 import SearchBox from "./SearchBox";
 import kappa from "../Assets/kappa.png";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   return (
     <div className="flex items-center justify-between p-4 text-kappa-gray bg-kappa-dark-gray">
       <div className="flex items-center">

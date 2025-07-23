@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Views/Home";
 import Result from "./Views/Result";
 import Footer from "./Components/Footer";
+import { UserPreference } from "./types";
 
 const App = () => {
-  const [prefs, setPrefs] = useState([]); //user preferences (ratings)
-  const [algorithm, setAlgorithm] = useState("");
+  const [prefs, setPrefs] = useState<UserPreference[]>([]); //user preferences (ratings)
+  const [algorithm, setAlgorithm] = useState<string>("");
 
   return (
     <Router>

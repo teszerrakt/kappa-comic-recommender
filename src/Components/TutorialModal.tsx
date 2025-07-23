@@ -3,7 +3,16 @@ import kappa from "../Assets/kappa.png";
 import useStorage from "../Hooks/useStorage";
 import { SESSION_STORAGE } from "../constant";
 
-const Header = () => (
+interface TutorialModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+interface FooterProps {
+  onClose: () => void;
+}
+
+const Header: React.FC = () => (
   <>
     <h2 className="text-3xl font-bold text-center text-kappa-green">
       Welcome to Kappa
@@ -11,7 +20,7 @@ const Header = () => (
   </>
 );
 
-const Footer = ({ onClose }) => (
+const Footer: React.FC<FooterProps> = ({ onClose }) => (
   <button
     onClick={onClose}
     className="w-full px-4 py-2 font-bold rounded-lg bg-kappa-green hover:brightness-90"
@@ -20,13 +29,13 @@ const Footer = ({ onClose }) => (
   </button>
 );
 
-const TutorialModal = ({ isVisible, onClose }) => {
-  const [isModalShownOnce, setIsModalShownOnce] = useStorage(
+const TutorialModal: React.FC<TutorialModalProps> = ({ isVisible, onClose }) => {
+  const [isModalShownOnce, setIsModalShownOnce] = useStorage<boolean>(
     SESSION_STORAGE.SHOW_TUTORIAL_MODAL,
     false
   );
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsModalShownOnce(true);
     onClose();
   };

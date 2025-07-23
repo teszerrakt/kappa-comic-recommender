@@ -1,13 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faStar, faMagic } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { UserPreference, Algorithm } from "../types";
 
-const UserPreferences = ({ prefs, setPrefs, algo, setAlgorithm }) => {
-  const handleDelete = (id) => () => {
+interface UserPreferencesProps {
+  prefs: UserPreference[];
+  setPrefs: React.Dispatch<React.SetStateAction<UserPreference[]>>;
+  algo: string;
+  setAlgorithm: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface ButtonProps {
+  children: React.ReactNode;
+  algorithm: Algorithm;
+}
+
+const UserPreferences: React.FC<UserPreferencesProps> = ({ prefs, setPrefs, algo, setAlgorithm }) => {
+  const handleDelete = (id: string) => () => {
     setPrefs((chips) => chips.filter((chip) => chip.id !== id));
   };
 
-  const Button = ({ children, algorithm }) => (
+  const Button: React.FC<ButtonProps> = ({ children, algorithm }) => (
     <button
       className="p-2 text-2xl font-bold text-center duration-300 border border-kappa-dark-gray text-kappa-dark-gray bg-kappa-green rounded-xl hover:bg-kappa-dark-gray hover:border-kappa-green hover:text-kappa-green"
       onClick={() => setAlgorithm(algorithm)}

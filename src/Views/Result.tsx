@@ -2,19 +2,27 @@ import { useEffect, useState } from "react";
 import NavBarResult from "../Components/NavBarResult";
 import UserPreferences from "../Components/UserPreferences";
 import Loading from "../Components/Loading";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import PredictionCard from "../Components/PredictionCard";
 import { KAPPA_API_URL } from "../env";
+import { UserPreference, PredictionState, PredictionResponse } from "../types";
 
-const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
+interface ResultProps {
+  prefs: UserPreference[];
+  setPrefs: React.Dispatch<React.SetStateAction<UserPreference[]>>;
+  algorithm: string;
+  setAlgorithm: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
   const url = `${KAPPA_API_URL}/api/${algorithm}`;
-  const [prediction, setPrediction] = useState({
+  const [prediction, setPrediction] = useState<PredictionState>({
     loading: false,
     data: null,
     error: false,
   });
 
-  let content = null;
+  let content: React.ReactNode = null;
 
   useEffect(() => {
     setPrediction({
@@ -22,9 +30,10 @@ const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
       data: null,
       error: false,
     });
+    
     axios
-      .post(url, prefs)
-      .then((response) => {
+      .post<PredictionResponse[]>(url, prefs)
+      .then((response: AxiosResponse<PredictionResponse[]>) => {
         console.log(response);
         setPrediction({
           loading: false,
@@ -33,6 +42,7 @@ const Result = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
         });
       })
       .catch((error) => {
+        console.error("Prediction API error:", error);
         setPrediction({
           loading: false,
           data: null,

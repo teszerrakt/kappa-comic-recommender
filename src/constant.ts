@@ -1,3 +1,3 @@
 export const SESSION_STORAGE = {
   SHOW_TUTORIAL_MODAL: "SHOW_TUTORIAL_MODAL",
-};
+} as const;

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Kappa is a cluster-based comic recommender system frontend built with ReactJS, Vite, and TailwindCSS. The application allows users to rate comics and receive recommendations using different clustering algorithms (K-means and DBSCAN).
+Kappa is a cluster-based comic recommender system frontend built with **TypeScript**, **React 18**, **Vite**, and **TailwindCSS**. The application allows users to rate comics and receive recommendations using different clustering algorithms (K-means and DBSCAN).
 
 ## Development Commands
 
@@ -55,12 +55,27 @@ VITE_ALGOLIA_API_KEY=your_algolia_api_key
 VITE_KAPPA_API_URL=your_api_url
 ```
 
-## Build Tool Migration Notes
-The project has been migrated from Create React App (CRA) to Vite for improved performance and development experience:
+## Technology Stack
 
-- **Build Tool**: Vite replaces CRACO/CRA
-- **Package Manager**: Uses pnpm for faster dependency management
+### Build & Development Tools
+- **Build Tool**: Vite (migrated from Create React App)
+- **Package Manager**: pnpm for faster dependency management
+- **Language**: TypeScript with strict type checking
+- **Linting & Formatting**: ESLint with TypeScript support
+
+### Migration Notes
+The project has been fully migrated to modern web technologies:
+
+- **CRA → Vite**: Faster build times and improved development experience
+- **JavaScript → TypeScript**: Full type safety with strict configuration
+- **React 17 → React 18**: Updated to createRoot API and latest patterns
+- **React Router v5 → v6**: Modern routing with `Routes` and `element` props  
+- **react-instantsearch-dom → react-instantsearch v7**: Updated search components
 - **Environment Variables**: Prefixed with `VITE_` instead of `REACT_APP_`
-- **React Router**: Updated to v6 syntax with `Routes` and `element` props
-- **React InstantSearch**: Updated to v7 from react-instantsearch-dom
-- **JSX in .js files**: Configured via esbuild loader in vite.config.js
+
+### TypeScript Features
+- **Strict Type Checking**: Enabled with `strict: true` in tsconfig.json
+- **Interface Definitions**: Comprehensive type definitions in `/src/types/`
+- **Component Props**: All React components fully typed with interfaces
+- **API Responses**: Typed interfaces for external API calls
+- **Development Experience**: Full IntelliSense and compile-time error checking

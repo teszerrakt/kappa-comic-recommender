@@ -1,4 +1,4 @@
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <div className="absolute bottom-0 flex justify-center w-full bg-kappa-dark-gray text-kappa-gray">
       <h1 className="py-4 text-xl">
