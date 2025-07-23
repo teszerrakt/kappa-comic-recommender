@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Views/Home";
 import Result from "./Views/Result";
 import Footer from "./Components/Footer";
+import FloatingHelpButton from "./Components/FloatingHelpButton";
 import { UserPreference } from "./types";
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
           />
         </Routes>
         <Footer />
+        <FloatingHelpButton />
       </div>
     </Router>
   );

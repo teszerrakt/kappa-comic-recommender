@@ -6,6 +6,7 @@ import { SESSION_STORAGE } from "../constant";
 interface TutorialModalProps {
   isVisible: boolean;
   onClose: () => void;
+  forceShow?: boolean;
 }
 
 interface FooterProps {
@@ -29,20 +30,24 @@ const Footer: React.FC<FooterProps> = ({ onClose }) => (
   </button>
 );
 
-const TutorialModal: React.FC<TutorialModalProps> = ({ isVisible, onClose }) => {
+const TutorialModal: React.FC<TutorialModalProps> = ({ isVisible, onClose, forceShow = false }) => {
   const [isModalShownOnce, setIsModalShownOnce] = useStorage<boolean>(
     SESSION_STORAGE.SHOW_TUTORIAL_MODAL,
     false
   );
 
   const handleClose = (): void => {
-    setIsModalShownOnce(true);
+    if (!forceShow) {
+      setIsModalShownOnce(true);
+    }
     onClose();
   };
 
+  const shouldShowModal = forceShow ? isVisible : (isVisible && !isModalShownOnce);
+
   return (
     <Modal
-      isVisible={isVisible && !isModalShownOnce}
+      isVisible={shouldShowModal}
       header={<Header />}
       footer={<Footer onClose={handleClose} />}
       onClose={handleClose}
