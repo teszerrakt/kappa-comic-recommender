@@ -3,6 +3,7 @@ import { useHits } from "react-instantsearch";
 import { Card, CardContent } from "./ui/card";
 import { StarRating } from "./ui/star-rating";
 import Image from "./Image";
+import ComicCardOverlay from "./ComicCardOverlay";
 import { UserPreference, ComicHit } from "../types";
 
 interface ComicCardProps {
@@ -81,19 +82,15 @@ const ComicCard: React.FC<ComicCardProps> = ({ setPrefs, prefs }) => {
           key={hit.id}
           className="bg-kappa-dark-gray border-kappa-gray/20 hover:border-kappa-green/50 transition-colors"
         >
-          <CardContent className="p-2">
-            <a
-              href={`https://myanimelist.net/manga/${hit.id}`}
-              target="_blank"
-              rel="noreferrer"
-            >
+          <ComicCardOverlay id={hit.id} title={hit.title}>
+            <CardContent className="p-2">
               <Image
-                className="object-cover object-top w-full duration-500 rounded-xl sm:h-96 hover:opacity-50"
+                className="object-cover object-top w-full duration-500 rounded-xl sm:h-96"
                 src={hit.imageUrl}
                 alt={hit.title}
               />
-            </a>
-          </CardContent>
+            </CardContent>
+          </ComicCardOverlay>
           <div className="flex flex-col items-center">
             <div className="flex items-center h-16">
               <h1 className="p-2 text-lg font-bold text-center text-kappa-green">
