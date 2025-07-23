@@ -24,18 +24,7 @@ const App = () => {
             }
           />
           <Route
-            path="/kmeans"
-            element={
-              <Result
-                prefs={prefs}
-                setPrefs={setPrefs}
-                algorithm={algorithm}
-                setAlgorithm={setAlgorithm}
-              />
-            }
-          />
-          <Route
-            path="/dbscan"
+            path="/results"
             element={
               <Result
                 prefs={prefs}

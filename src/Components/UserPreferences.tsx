@@ -60,12 +60,12 @@ const UserPreferences: React.FC<UserPreferencesProps> = ({ prefs, setPrefs, algo
         } justify-center gap-2 p-2`}
       >
         <Link
-          to="/kmeans"
+          to="/results?algorithm=kmeans"
           className={`${algo === "kmeans" ? "hidden" : "inline-block"}`}
         >
           <Button algorithm="kmeans">K-Means</Button>
         </Link>
-        <Link to="/dbscan" className={`${algo === "dbscan" && "hidden"}`}>
+        <Link to="/results?algorithm=dbscan" className={`${algo === "dbscan" && "hidden"}`}>
           <Button algorithm="dbscan">DBSCAN</Button>
         </Link>
       </div>

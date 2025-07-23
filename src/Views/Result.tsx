@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import NavBarResult from "../Components/NavBarResult";
 import UserPreferences from "../Components/UserPreferences";
 import Loading from "../Components/Loading";
@@ -15,7 +16,17 @@ interface ResultProps {
 }
 
 const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorithm }) => {
-  const url = `${KAPPA_API_URL}/api/${algorithm}`;
+  const [searchParams] = useSearchParams();
+  const algorithmFromUrl = searchParams.get('algorithm') || algorithm;
+  
+  // Update algorithm state when URL changes
+  useEffect(() => {
+    if (algorithmFromUrl && algorithmFromUrl !== algorithm) {
+      setAlgorithm(algorithmFromUrl);
+    }
+  }, [algorithmFromUrl, algorithm, setAlgorithm]);
+
+  const url = `${KAPPA_API_URL}/api/${algorithmFromUrl}`;
   const [prediction, setPrediction] = useState<PredictionState>({
     loading: false,
     data: null,
@@ -76,11 +87,11 @@ const Result: React.FC<ResultProps> = ({ prefs, setPrefs, algorithm, setAlgorith
 
   return (
     <div className="relative">
-      <NavBarResult algorithm={algorithm} />
+      <NavBarResult algorithm={algorithmFromUrl} />
       <UserPreferences
         prefs={prefs}
         setPrefs={setPrefs}
-        algo={algorithm}
+        algo={algorithmFromUrl}
         setAlgorithm={setAlgorithm}
       />
       {content}
