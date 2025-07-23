@@ -4,16 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Kappa is a cluster-based comic recommender system frontend built with ReactJS and TailwindCSS. The application allows users to rate comics and receive recommendations using different clustering algorithms (K-means and DBSCAN).
+Kappa is a cluster-based comic recommender system frontend built with ReactJS, Vite, and TailwindCSS. The application allows users to rate comics and receive recommendations using different clustering algorithms (K-means and DBSCAN).
 
 ## Development Commands
 
-- **Start development server**: `npm start` or `yarn start`
-- **Build for production**: `npm run build` or `yarn build`
-- **Run tests**: `npm test` or `yarn test`
-- **Eject (not recommended)**: `npm run eject`
+- **Start development server**: `pnpm dev`
+- **Build for production**: `pnpm build`
+- **Preview production build**: `pnpm preview`
+- **Run tests**: `pnpm test`
 
-The project uses CRACO (Create React App Configuration Override) with Tailwind CSS in watch mode during development.
+The project uses Vite as the build tool with React and TailwindCSS integration.
 
 ## Architecture
 
@@ -35,8 +35,8 @@ The project uses CRACO (Create React App Configuration Override) with Tailwind C
 - Tutorial modal visibility is managed via localStorage (`useStorage` hook)
 
 ### External Services
-- **Algolia Search**: Comic search functionality (requires `REACT_APP_ALGOLIA_APP_ID` and `REACT_APP_ALGOLIA_API_KEY`)
-- **Kappa API**: Machine learning recommendations endpoint (requires `REACT_APP_KAPPA_API_URL`)
+- **Algolia Search**: Comic search functionality (requires `VITE_ALGOLIA_APP_ID` and `VITE_ALGOLIA_API_KEY`)
+- **Kappa API**: Machine learning recommendations endpoint (requires `VITE_KAPPA_API_URL`)
 
 ### Routing
 - `/` - Home page with comic search and rating
@@ -50,7 +50,17 @@ The project uses CRACO (Create React App Configuration Override) with Tailwind C
 
 ## Environment Variables Required
 ```
-REACT_APP_ALGOLIA_APP_ID=your_algolia_app_id
-REACT_APP_ALGOLIA_API_KEY=your_algolia_api_key
-REACT_APP_KAPPA_API_URL=your_api_url
+VITE_ALGOLIA_APP_ID=your_algolia_app_id
+VITE_ALGOLIA_API_KEY=your_algolia_api_key
+VITE_KAPPA_API_URL=your_api_url
 ```
+
+## Build Tool Migration Notes
+The project has been migrated from Create React App (CRA) to Vite for improved performance and development experience:
+
+- **Build Tool**: Vite replaces CRACO/CRA
+- **Package Manager**: Uses pnpm for faster dependency management
+- **Environment Variables**: Prefixed with `VITE_` instead of `REACT_APP_`
+- **React Router**: Updated to v6 syntax with `Routes` and `element` props
+- **React InstantSearch**: Updated to v7 from react-instantsearch-dom
+- **JSX in .js files**: Configured via esbuild loader in vite.config.js

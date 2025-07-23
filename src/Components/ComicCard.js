@@ -1,11 +1,12 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment } from "react";
-import { connectHits } from "react-instantsearch-dom";
+import { useHits } from "react-instantsearch";
 import ReactStars from "react-rating-stars-component";
 import Image from "./Image";
 
-const ComicCard = ({ hits, setPrefs, prefs }) => {
+const ComicCard = ({ setPrefs, prefs }) => {
+  const { hits } = useHits();
   const addItem = (id, title, newRating) => {
     const newItem = {
       id: id,
@@ -108,6 +109,4 @@ const ComicCard = ({ hits, setPrefs, prefs }) => {
   );
 };
 
-const CustomHits = connectHits(ComicCard);
-
-export default CustomHits;
+export default ComicCard;

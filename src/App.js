@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Views/Home";
 import Result from "./Views/Result";
 import Footer from "./Components/Footer";
@@ -11,32 +11,40 @@ const App = () => {
   return (
     <Router>
       <div className="relative min-h-screen pb-10">
-        <Switch>
-          <Route exact path="/">
-            <Home
-              prefs={prefs}
-              setPrefs={setPrefs}
-              setAlgorithm={setAlgorithm}
-            />
-            ;
-          </Route>
-          <Route path="/kmeans">
-            <Result
-              prefs={prefs}
-              setPrefs={setPrefs}
-              algorithm={algorithm}
-              setAlgorithm={setAlgorithm}
-            />
-          </Route>
-          <Route path="/dbscan">
-            <Result
-              prefs={prefs}
-              setPrefs={setPrefs}
-              algorithm={algorithm}
-              setAlgorithm={setAlgorithm}
-            />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                prefs={prefs}
+                setPrefs={setPrefs}
+                setAlgorithm={setAlgorithm}
+              />
+            }
+          />
+          <Route
+            path="/kmeans"
+            element={
+              <Result
+                prefs={prefs}
+                setPrefs={setPrefs}
+                algorithm={algorithm}
+                setAlgorithm={setAlgorithm}
+              />
+            }
+          />
+          <Route
+            path="/dbscan"
+            element={
+              <Result
+                prefs={prefs}
+                setPrefs={setPrefs}
+                algorithm={algorithm}
+                setAlgorithm={setAlgorithm}
+              />
+            }
+          />
+        </Routes>
         <Footer />
       </div>
     </Router>

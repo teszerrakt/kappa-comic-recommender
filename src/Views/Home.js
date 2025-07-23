@@ -1,4 +1,4 @@
-import { InstantSearch } from "react-instantsearch-dom";
+import { InstantSearch } from "react-instantsearch";
 import ComicCard from "../Components/ComicCard";
 import NavBar from "../Components/NavBar";
 import UserPreferences from "../Components/UserPreferences";
