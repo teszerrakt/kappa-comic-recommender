@@ -23,11 +23,13 @@ const Home: React.FC<HomeProps> = ({ prefs, setPrefs, setAlgorithm }) => {
     <>
       <InstantSearch searchClient={searchClient} indexName="comics">
         <NavBar />
-        <UserPreferences
-          prefs={prefs}
-          setPrefs={setPrefs}
-          setAlgorithm={setAlgorithm}
-        />
+        <div className="p-4">
+          <UserPreferences
+            prefs={prefs}
+            setPrefs={setPrefs}
+            setAlgorithm={setAlgorithm}
+          />
+        </div>
         <div className="p-4 pb-10">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 ">
             <ComicCard setPrefs={setPrefs} prefs={prefs} />

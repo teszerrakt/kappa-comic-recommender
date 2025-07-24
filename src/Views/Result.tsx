@@ -93,12 +93,14 @@ const Result: React.FC<ResultProps> = ({
   return (
     <div className="relative">
       <NavBarResult algorithm={algorithmFromUrl} />
-      <UserPreferences
-        prefs={prefs}
-        setPrefs={setPrefs}
-        algo={algorithmFromUrl}
-        setAlgorithm={setAlgorithm}
-      />
+      <div className="p-4">
+        <UserPreferences
+          prefs={prefs}
+          setPrefs={setPrefs}
+          algo={algorithmFromUrl}
+          setAlgorithm={setAlgorithm}
+        />
+      </div>
       {content}
     </div>
   );
