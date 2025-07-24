@@ -1,6 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Calendar, BookOpen, Star, Users, Trophy, Heart } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../Components/ui/card";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Calendar,
+  BookOpen,
+  Star,
+  Users,
+  Trophy,
+  Heart,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../Components/ui/card";
 import { Button } from "../Components/ui/button";
 import { Badge } from "../Components/ui/badge";
 import Image from "../Components/Image";
@@ -12,31 +26,36 @@ import { MangaData } from "../types";
 const ComicDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: mangaResponse, isLoading, isError, error } = useMangaDetails(id);
-  
+  const {
+    data: mangaResponse,
+    isLoading,
+    isError,
+    error,
+  } = useMangaDetails(id);
+
   const manga: MangaData | undefined = mangaResponse?.data;
 
   const formatDate = (dateString?: string) => {
-    if (!dateString) return 'Unknown';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    if (!dateString) return "Unknown";
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   const getStatusColor = (status?: string) => {
     switch (status?.toLowerCase()) {
-      case 'finished':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'publishing':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'on hiatus':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'discontinued':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case "finished":
+        return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "publishing":
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "on hiatus":
+        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "discontinued":
+        return "bg-red-500/20 text-red-400 border-red-500/30";
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
@@ -53,11 +72,14 @@ const ComicDetails: React.FC = () => {
       <div className="min-h-screen bg-kappa-black flex items-center justify-center">
         <Card className="bg-kappa-dark-gray border-kappa-gray/20 max-w-md mx-auto">
           <CardContent className="p-6 text-center">
-            <h2 className="text-xl font-bold text-red-400 mb-2">Error Loading Manga</h2>
+            <h2 className="text-xl font-bold text-red-400 mb-2">
+              Error Loading Manga
+            </h2>
             <p className="text-kappa-gray mb-4">
-              {error?.message || "Unable to load manga details. Please try again later."}
+              {error?.message ||
+                "Unable to load manga details. Please try again later."}
             </p>
-            <Button 
+            <Button
               onClick={() => navigate(-1)}
               className="bg-kappa-green hover:bg-kappa-green/80"
             >
@@ -73,63 +95,92 @@ const ComicDetails: React.FC = () => {
     <div className="min-h-screen bg-kappa-black text-white">
       <NavBar showSearch={false} />
       <div className="mx-auto px-4 py-8">
-        {/* Header with back button */}
-        <div className="mb-6">
-          <Button
-            onClick={() => navigate(-1)}
-            variant="ghost"
-            className="text-kappa-green hover:text-kappa-green/80 hover:bg-kappa-green/10 mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left column - Image and basic info */}
           <div className="lg:col-span-1">
             <Card className="bg-kappa-dark-gray border-kappa-gray/20 sticky top-8">
               <CardContent className="p-4">
+                {/* Back button, main title, and alternative titles */}
+                <div className="flex items-start gap-2 mb-2">
+                  <Button
+                    onClick={() => navigate(-1)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-kappa-green hover:text-kappa-green/80 hover:bg-kappa-green/10 p-1 w-8 h-8"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </Button>
+                  <h1 className="text-xl lg:text-2xl font-bold text-kappa-green ">
+                    {manga.title}
+                  </h1>
+                </div>
+                <div className="flex-1 mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {manga.title_english &&
+                      manga.title_english !== manga.title && (
+                        <Badge
+                          variant="secondary"
+                          className="bg-kappa-gray/20 text-kappa-gray border-kappa-gray/30 text-xs rounded-md"
+                        >
+                          EN: {manga.title_english}
+                        </Badge>
+                      )}
+                    {manga.title_japanese && (
+                      <Badge
+                        variant="secondary"
+                        className="bg-kappa-gray/20 text-kappa-gray border-kappa-gray/30 text-xs rounded-md"
+                      >
+                        JP: {manga.title_japanese}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
                 <div className="aspect-[3/4] mb-4">
                   <Image
-                    src={manga.images?.jpg?.large_image_url || manga.images?.jpg?.image_url || ''}
+                    src={
+                      manga.images?.jpg?.large_image_url ||
+                      manga.images?.jpg?.image_url ||
+                      ""
+                    }
                     alt={manga.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
-                
+
                 <div className="space-y-3">
                   <Badge className={`w-fit ${getStatusColor(manga.status)}`}>
-                    {manga.status || 'Unknown'}
+                    {manga.status || "Unknown"}
                   </Badge>
-                  
+
                   <div className="flex items-center gap-2 text-sm text-kappa-gray">
                     <BookOpen className="w-4 h-4" />
-                    <span>{manga.type || 'Unknown Type'}</span>
+                    <span>{manga.type || "Unknown Type"}</span>
                   </div>
-                  
+
                   {manga.chapters && (
                     <div className="flex items-center gap-2 text-sm text-kappa-gray">
                       <span>Chapters: {manga.chapters}</span>
                     </div>
                   )}
-                  
+
                   {manga.volumes && (
                     <div className="flex items-center gap-2 text-sm text-kappa-gray">
                       <span>Volumes: {manga.volumes}</span>
                     </div>
                   )}
-                  
+
                   {manga.published?.from && (
                     <div className="flex items-center gap-2 text-sm text-kappa-gray">
                       <Calendar className="w-4 h-4" />
                       <span>
                         {formatDate(manga.published.from)}
-                        {manga.published.to && ` - ${formatDate(manga.published.to)}`}
+                        {manga.published.to &&
+                          ` - ${formatDate(manga.published.to)}`}
                       </span>
                     </div>
                   )}
-                  
+
                   {manga.url && (
                     <Button
                       asChild
@@ -153,73 +204,80 @@ const ComicDetails: React.FC = () => {
 
           {/* Right column - Detailed information */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Title and basic stats */}
-            <Card className="bg-kappa-dark-gray border-kappa-gray/20">
-              <CardHeader>
-                <CardTitle className="text-2xl lg:text-3xl text-kappa-green">
-                  {manga.title}
-                </CardTitle>
-                {manga.title_english && manga.title_english !== manga.title && (
-                  <p className="text-lg text-kappa-gray">{manga.title_english}</p>
-                )}
-                {manga.title_japanese && (
-                  <p className="text-base text-kappa-gray">{manga.title_japanese}</p>
-                )}
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {manga.score && (
-                    <div className="flex items-center gap-2">
-                      <Star className="w-5 h-5 text-yellow-400" />
+            {/* Stats cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {manga.score && (
+                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Star className="w-6 h-6 text-yellow-400" />
                       <div>
-                        <p className="font-semibold text-kappa-green">{manga.score.toFixed(1)}</p>
-                        <p className="text-xs text-kappa-gray">Score</p>
+                        <p className="text-lg font-semibold text-kappa-green">
+                          {manga.score.toFixed(1)}
+                        </p>
+                        <p className="text-sm text-kappa-gray">Score</p>
                       </div>
                     </div>
-                  )}
-                  
-                  {manga.rank && (
-                    <div className="flex items-center gap-2">
-                      <Trophy className="w-5 h-5 text-orange-400" />
+                  </CardContent>
+                </Card>
+              )}
+
+              {manga.rank && (
+                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Trophy className="w-6 h-6 text-orange-400" />
                       <div>
-                        <p className="font-semibold text-kappa-green">#{manga.rank}</p>
-                        <p className="text-xs text-kappa-gray">Rank</p>
+                        <p className="text-lg font-semibold text-kappa-green">
+                          #{manga.rank}
+                        </p>
+                        <p className="text-sm text-kappa-gray">Rank</p>
                       </div>
                     </div>
-                  )}
-                  
-                  {manga.members && (
-                    <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-blue-400" />
+                  </CardContent>
+                </Card>
+              )}
+
+              {manga.members && (
+                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-6 h-6 text-blue-400" />
                       <div>
-                        <p className="font-semibold text-kappa-green">
+                        <p className="text-lg font-semibold text-kappa-green">
                           {manga.members.toLocaleString()}
                         </p>
-                        <p className="text-xs text-kappa-gray">Members</p>
+                        <p className="text-sm text-kappa-gray">Members</p>
                       </div>
                     </div>
-                  )}
-                  
-                  {manga.favorites && (
-                    <div className="flex items-center gap-2">
-                      <Heart className="w-5 h-5 text-red-400" />
+                  </CardContent>
+                </Card>
+              )}
+
+              {manga.favorites && (
+                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Heart className="w-6 h-6 text-red-400" />
                       <div>
-                        <p className="font-semibold text-kappa-green">
+                        <p className="text-lg font-semibold text-kappa-green">
                           {manga.favorites.toLocaleString()}
                         </p>
-                        <p className="text-xs text-kappa-gray">Favorites</p>
+                        <p className="text-sm text-kappa-gray">Favorites</p>
                       </div>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
 
             {/* Synopsis */}
             {manga.synopsis && (
               <Card className="bg-kappa-dark-gray border-kappa-gray/20">
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">Synopsis</CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">
+                    Synopsis
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-kappa-gray leading-relaxed whitespace-pre-line">
@@ -233,7 +291,9 @@ const ComicDetails: React.FC = () => {
             {manga.background && (
               <Card className="bg-kappa-dark-gray border-kappa-gray/20">
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">Background</CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">
+                    Background
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-kappa-gray leading-relaxed whitespace-pre-line">
@@ -247,7 +307,9 @@ const ComicDetails: React.FC = () => {
             {manga.authors && manga.authors.length > 0 && (
               <Card className="bg-kappa-dark-gray border-kappa-gray/20">
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">Authors</CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">
+                    Authors
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
@@ -266,17 +328,21 @@ const ComicDetails: React.FC = () => {
             )}
 
             {/* Genres and Themes */}
-            {((manga.genres && manga.genres.length > 0) || 
-              (manga.themes && manga.themes.length > 0) || 
+            {((manga.genres && manga.genres.length > 0) ||
+              (manga.themes && manga.themes.length > 0) ||
               (manga.demographics && manga.demographics.length > 0)) && (
               <Card className="bg-kappa-dark-gray border-kappa-gray/20">
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">Categories</CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">
+                    Categories
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {manga.genres && manga.genres.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Genres</h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
+                        Genres
+                      </h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.genres.map((genre) => (
                           <Badge
@@ -289,10 +355,12 @@ const ComicDetails: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   {manga.themes && manga.themes.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Themes</h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
+                        Themes
+                      </h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.themes.map((theme) => (
                           <Badge
@@ -306,10 +374,12 @@ const ComicDetails: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   {manga.demographics && manga.demographics.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Demographics</h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
+                        Demographics
+                      </h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.demographics.map((demo) => (
                           <Badge
@@ -331,7 +401,9 @@ const ComicDetails: React.FC = () => {
             {manga.serializations && manga.serializations.length > 0 && (
               <Card className="bg-kappa-dark-gray border-kappa-gray/20">
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">Serializations</CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">
+                    Serializations
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
