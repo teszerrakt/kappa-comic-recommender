@@ -5,7 +5,7 @@ import UserPreferences from "../Components/UserPreferences";
 import Loading from "../Components/Loading";
 import axios, { AxiosResponse } from "axios";
 import PredictionCard from "../Components/PredictionCard";
-import { KAPPA_API_URL } from "../env";
+import { KAPPA_API_TOKEN, KAPPA_API_URL } from "../env";
 import { UserPreference, PredictionState, PredictionResponse } from "../types";
 
 interface ResultProps {
@@ -48,7 +48,11 @@ const Result: React.FC<ResultProps> = ({
     });
 
     axios
-      .post<PredictionResponse[]>(url, prefs)
+      .post<PredictionResponse[]>(url, prefs, {
+        headers: {
+          "X-API-Key": KAPPA_API_TOKEN,
+        },
+      })
       .then((response: AxiosResponse<PredictionResponse[]>) => {
         console.log(response);
         setPrediction({
