@@ -2,14 +2,13 @@ import kappa from "../Assets/kappa.png";
 
 const Loading = () => {
   return (
-    <div className="absolute top-0 left-0 z-50 bg-kappa-black">
-      <div className="flex flex-col items-center justify-center w-screen h-screen">
-        <img className="h-32 animate-bounce" src={kappa} alt="kappa" />
-        <h1 className="text-2xl font-bold text-kappa-green animate-pulse">
-          Please wait...
-        </h1>
-      </div>
-    </div>
+    <output
+      className="flex flex-col items-center justify-center py-12 text-center"
+      aria-live="polite"
+    >
+      <img className="h-20 animate-bounce" src={kappa} alt="Loading" />
+      <p className="mt-3 text-lg font-semibold text-kappa-green animate-pulse">Loading...</p>
+    </output>
   );
 };
 

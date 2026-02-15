@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { HelpCircle } from "lucide-react";
+import { useState } from "react";
 import TutorialModal from "./TutorialModal";
+import { Button } from "./ui/button";
 
 const FloatingHelpButton: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,19 +16,17 @@ const FloatingHelpButton: React.FC = () => {
 
   return (
     <>
-      <button
+      <Button
         onClick={handleOpenModal}
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-kappa-dark-gray border-2 border-kappa-green rounded-full text-kappa-green hover:bg-kappa-green hover:text-kappa-black transition-all duration-300 shadow-lg hover:shadow-xl"
+        variant="kappaOutline"
+        size="icon"
+        className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full border-2 shadow-lg transition-all duration-200"
         aria-label="Open help tutorial"
       >
         <HelpCircle className="h-6 w-6" />
-      </button>
+      </Button>
 
-      <TutorialModal
-        isVisible={isModalOpen}
-        onClose={handleCloseModal}
-        forceShow={true}
-      />
+      <TutorialModal isVisible={isModalOpen} onClose={handleCloseModal} forceShow={true} />
     </>
   );
 };

@@ -17,12 +17,13 @@ export function useRating({ prefs, setPrefs }: UseRatingOptions): UseRatingRetur
       const exists = prefs.some((pref) => pref.id === id);
 
       if (exists) {
-        setPrefs((prev) =>
-          prev.map((pref) =>
-            pref.id === id ? { ...pref, rating: newRating } : pref,
-          ),
-        );
-      } else {
+        if (newRating === 0) {
+          setPrefs((prev) => prev.filter((pref) => pref.id !== id));
+          return;
+        }
+
+        setPrefs((prev) => prev.map((pref) => (pref.id === id ? { ...pref, rating: newRating } : pref)));
+      } else if (newRating > 0) {
         setPrefs((prev) => [...prev, { id, title, rating: newRating }]);
       }
     },

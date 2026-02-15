@@ -6,15 +6,14 @@
   --color-kappa-dark-gray: #1c1c1c;
   --color-kappa-gray: #757575;
   --color-kappa-green: #57946c;
+  --color-kappa-gold: #e6c15c;
+  --color-kappa-blue: #6aa7e0;
+  --color-kappa-orange: #e2a15c;
+  --color-kappa-purple: #b18ae6;
+  --color-kappa-red: #e06b6b;
 
   /* Font */
   --font-nunito: "Nunito", sans-serif;
-
-  /* Custom widths */
-  --width-1/5-vw: 20vw;
-  --width-2/5-vw: 40vw;
-  --width-3/5-vw: 60vw;
-  --width-4/5-vw: 80vw;
 
   /* Container */
   --container-2xl: 1400px;
@@ -23,10 +22,6 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
-
-  /* Animations */
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
 
   /* shadcn/ui color mappings */
   --color-border: hsl(var(--border));
@@ -55,70 +50,30 @@
 
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
-
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 142 76% 36%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 142 76% 36%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 5%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 0 0% 11%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
+    --popover: 0 0% 11%;
     --popover-foreground: 0 0% 98%;
-    --primary: 142 76% 36%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 3.7% 15.9%;
+    --primary: 141 26% 46%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 18%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 65% 65%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 142 76% 36%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 141 26% 46%;
+    --radius: 0.5rem;
   }
 
   * {
@@ -127,8 +82,7 @@
 
   body {
     @apply bg-background text-foreground;
-    background-color: #0e0e0e;
-    font-family: "Nunito";
+    font-family: var(--font-nunito);
   }
 }
 
@@ -137,4 +91,19 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 200ms ease-out;
 }

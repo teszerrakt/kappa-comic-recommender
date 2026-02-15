@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type StorageType = "session" | "local";
 
@@ -12,7 +12,7 @@ const getStorageValue = <T>(storageType: StorageType, key: string): T | null => 
   try {
     return storedValue ? (JSON.parse(storedValue) as T) : null;
   } catch {
-    return storedValue as T;
+    return null;
   }
 };
 
@@ -26,7 +26,7 @@ const useStorage = <T>(
   key: string,
   defaultValue: T,
   storageType: StorageType = "session",
-): [T, (newValue: T) => void] => {
+): [T, React.Dispatch<React.SetStateAction<T>>] => {
   const [value, setValue] = useState<T>(() => {
     const storedValue = getStorageValue<T>(storageType, key);
     return storedValue !== null ? storedValue : defaultValue;
@@ -36,11 +36,7 @@ const useStorage = <T>(
     setStorageValue(storageType, key, value);
   }, [key, value, storageType]);
 
-  const handleChange = (newValue: T): void => {
-    setValue(newValue);
-  };
-
-  return [value, handleChange];
+  return [value, setValue];
 };
 
 export default useStorage;
