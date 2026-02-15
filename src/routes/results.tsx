@@ -1,6 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
 import NavBarResult from "../Components/NavBarResult";
 import PredictionCard from "../Components/PredictionCard";
 import ResultsSkeleton from "../Components/ResultsSkeleton";
@@ -25,26 +24,22 @@ function ResultPage() {
   const { algorithm } = Route.useSearch();
   const { prefs, setPrefs } = usePreferences();
 
-  const { mutate, data, isPending, isError, error } = useMutation({
-    mutationFn: async (preferences: typeof prefs): Promise<PredictionResponse[]> => {
+  const { data, isPending, isError, error, refetch } = useQuery({
+    queryKey: ["predictions", algorithm, prefs],
+    queryFn: async (): Promise<PredictionResponse[]> => {
       const response = await fetch(`${KAPPA_API_URL}/api/${algorithm}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": KAPPA_API_TOKEN,
         },
-        body: JSON.stringify(preferences),
+        body: JSON.stringify(prefs),
       });
       if (!response.ok) throw new Error("Prediction failed");
       return response.json();
     },
+    enabled: prefs.length >= 5,
   });
-
-  useEffect(() => {
-    if (prefs.length >= 5) {
-      mutate(prefs);
-    }
-  }, [mutate, prefs]);
 
   const renderContent = () => {
     if (isError) {
@@ -54,7 +49,7 @@ function ResultPage() {
           <p className="mt-2 text-sm text-muted-foreground">
             {error?.message || "Please try again in a moment."}
           </p>
-          <Button variant="kappa" className="mt-4" onClick={() => mutate(prefs)}>
+          <Button variant="kappa" className="mt-4" onClick={() => refetch()}>
             Retry
           </Button>
         </div>

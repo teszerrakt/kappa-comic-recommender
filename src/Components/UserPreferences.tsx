@@ -42,29 +42,43 @@ const UserPreferences: React.FC<UserPreferencesProps> = ({ prefs, setPrefs, curr
             </p>
           </div>
         ) : (
-          <div className="grid gap-2 md:grid-cols-2">
-            {prefs.map((pref) => (
-              <div
-                key={pref.id}
-                className="flex justify-between items-center px-3 py-2 bg-background/60 rounded-lg border border-border"
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-kappa-green">Your ratings</h2>
+              <Button
+                variant="kappaOutline"
+                size="sm"
+                className="text-sm"
+                onClick={() => setPrefs([])}
+                aria-label="Clear all ratings"
               >
-                <div className="flex items-center text-kappa-green">
-                  <span>{pref.title}</span>
-                  <span className="mx-2 text-kappa-gray">·</span>
-                  <span className="text-kappa-gray">{pref.rating}</span>
-                  <Star className="ml-2 h-4 w-4 fill-kappa-green text-kappa-green" />
-                </div>
-                <Button
-                  variant="kappaGhost"
-                  size="sm"
-                  className="text-kappa-gray p-1 h-auto"
-                  onClick={handleDelete(pref.id)}
-                  aria-label={`Remove ${pref.title} from preferences`}
+                Clear all
+              </Button>
+            </div>
+            <div className="grid gap-2 md:grid-cols-2">
+              {prefs.map((pref) => (
+                <div
+                  key={pref.id}
+                  className="flex justify-between items-center px-3 py-2 bg-background/60 rounded-lg border border-border"
                 >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
+                  <div className="flex items-center text-kappa-green">
+                    <span>{pref.title}</span>
+                    <span className="mx-2 text-kappa-gray">·</span>
+                    <span className="text-kappa-gray">{pref.rating}</span>
+                    <Star className="ml-2 h-4 w-4 fill-kappa-green text-kappa-green" />
+                  </div>
+                  <Button
+                    variant="kappaGhost"
+                    size="sm"
+                    className="text-kappa-gray p-1 h-auto"
+                    onClick={handleDelete(pref.id)}
+                    aria-label={`Remove ${pref.title} from preferences`}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         {prefs.length > 0 && prefs.length < 5 && (
