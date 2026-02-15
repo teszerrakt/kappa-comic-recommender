@@ -16,7 +16,8 @@ export interface PredictionResponse {
   id: string;
   title: string;
   imageUrl: string;
-  // Add other fields that come from the API response
+  image_url: string;
+  rating: number;
 }
 
 export interface PredictionState {
