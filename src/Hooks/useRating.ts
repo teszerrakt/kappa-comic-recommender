@@ -22,13 +22,9 @@ export function useRating({ prefs, setPrefs }: UseRatingOptions): UseRatingRetur
           return;
         }
 
-        setPrefs((prev) =>
-          prev.map((pref) => (pref.id === id ? { ...pref, rating: newRating } : pref)),
-        );
-      } else {
-        if (newRating > 0) {
-          setPrefs((prev) => [...prev, { id, title, rating: newRating }]);
-        }
+        setPrefs((prev) => prev.map((pref) => (pref.id === id ? { ...pref, rating: newRating } : pref)));
+      } else if (newRating > 0) {
+        setPrefs((prev) => [...prev, { id, title, rating: newRating }]);
       }
     },
     [prefs, setPrefs],

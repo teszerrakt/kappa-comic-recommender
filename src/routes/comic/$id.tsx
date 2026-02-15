@@ -80,11 +80,9 @@ function ComicDetailsPage() {
       <NavBar showSearch={false} />
       <main className="mx-auto w-full max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left column - Image and basic info */}
           <div className="lg:col-span-1">
             <Card className="sticky top-8">
               <CardContent className="p-4">
-                {/* Back button, main title, and alternative titles */}
                 <div className="flex items-start gap-2 mb-2">
                   <Button
                     onClick={() => window.history.back()}
@@ -170,9 +168,7 @@ function ComicDetailsPage() {
             </Card>
           </div>
 
-          {/* Right column - Detailed information */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Stats cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {manga.score && (
                 <Card>
@@ -237,7 +233,6 @@ function ComicDetailsPage() {
               )}
             </div>
 
-            {/* Synopsis */}
             {manga.synopsis && (
               <Card>
                 <CardHeader>
@@ -251,7 +246,6 @@ function ComicDetailsPage() {
               </Card>
             )}
 
-            {/* Background */}
             {manga.background && (
               <Card>
                 <CardHeader>
@@ -265,7 +259,6 @@ function ComicDetailsPage() {
               </Card>
             )}
 
-            {/* Authors */}
             {manga.authors && manga.authors.length > 0 && (
               <Card>
                 <CardHeader>
@@ -283,7 +276,6 @@ function ComicDetailsPage() {
               </Card>
             )}
 
-            {/* Genres and Themes */}
             {((manga.genres && manga.genres.length > 0) ||
               (manga.themes && manga.themes.length > 0) ||
               (manga.demographics && manga.demographics.length > 0)) && (
@@ -334,7 +326,6 @@ function ComicDetailsPage() {
               </Card>
             )}
 
-            {/* Serializations */}
             {manga.serializations && manga.serializations.length > 0 && (
               <Card>
                 <CardHeader>

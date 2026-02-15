@@ -18,9 +18,7 @@ export const PreferencesProvider = ({ children }: PropsWithChildren) => {
     "local",
   );
   return (
-    <PreferencesContext.Provider value={{ prefs, setPrefs }}>
-      {children}
-    </PreferencesContext.Provider>
+    <PreferencesContext.Provider value={{ prefs, setPrefs }}>{children}</PreferencesContext.Provider>
   );
 };
 

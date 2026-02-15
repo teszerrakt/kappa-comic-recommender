@@ -18,7 +18,6 @@ const ComicCardOverlay: React.FC<ComicCardOverlayProps> = ({ id, children }) => 
     <div className="relative group">
       {children}
 
-      {/* Overlay */}
       <div className="absolute inset-0 bg-kappa-black/70 flex items-center justify-center transition-opacity duration-300 rounded-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
         <button
           type="button"

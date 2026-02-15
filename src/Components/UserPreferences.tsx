@@ -16,7 +16,7 @@ interface AlgorithmButtonProps {
   algorithm: Algorithm;
 }
 
-const AlgorithmButton: React.FC<AlgorithmButtonProps> = ({ children, algorithm }) => (
+const AlgorithmButton = ({ children, algorithm }: AlgorithmButtonProps) => (
   <Link to="/results" search={{ algorithm }}>
     <Button variant="kappaOutline" size="lg" className="text-lg">
       <Sparkles className="mr-2 h-5 w-5" />
@@ -25,7 +25,7 @@ const AlgorithmButton: React.FC<AlgorithmButtonProps> = ({ children, algorithm }
   </Link>
 );
 
-const UserPreferences: React.FC<UserPreferencesProps> = ({ prefs, setPrefs, currentAlgorithm }) => {
+const UserPreferences = ({ prefs, setPrefs, currentAlgorithm }: UserPreferencesProps) => {
   const handleDelete = (id: string) => () => {
     setPrefs((chips) => chips.filter((chip) => chip.id !== id));
   };

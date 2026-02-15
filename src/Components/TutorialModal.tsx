@@ -52,8 +52,8 @@ const TutorialModal: React.FC<TutorialModalProps> = ({ isVisible, onClose, force
           />
           <p className="px-2 mt-4 text-center text-kappa-gray">
             To get your comic recommendation, please rate at least{" "}
-            <b className="text-kappa-green">five titles</b> and then you can click K-Means or DBSCAN
-            buttons that will appear.
+            <b className="text-kappa-green">five titles</b> and then you can click K-Means or
+            DBSCAN buttons that will appear.
           </p>
         </div>
 

@@ -27,12 +27,7 @@ const NavBarResult: React.FC<NavBarResultProps> = ({ algorithm }) => {
         {algorithm === "kmeans" ? "K-Means" : "DBSCAN"}
       </div>
       <Link to="/">
-        <Button
-          variant="kappaOutline"
-          size="lg"
-          className="text-2xl font-bold"
-          aria-label="Go to home"
-        >
+        <Button variant="kappaOutline" size="lg" className="text-2xl font-bold" aria-label="Go to home">
           <Home className="h-6 w-6" />
         </Button>
       </Link>
