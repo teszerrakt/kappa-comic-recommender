@@ -1,18 +1,18 @@
 const Footer: React.FC = () => {
   return (
-    <div className="absolute bottom-0 flex justify-center w-full bg-kappa-dark-gray text-kappa-gray ">
-      <h1 className="py-4 text-xl">
+    <footer className="flex justify-center w-full bg-card text-muted-foreground">
+      <p className="py-4 text-sm">
         Made with ❤️ by{" "}
         <a
-          href="http://zsyihab.com"
+          href="https://zsyihab.com"
           className="text-kappa-green"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           Zaky Syihab
         </a>
-      </h1>
-    </div>
+      </p>
+    </footer>
   );
 };
 

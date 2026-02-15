@@ -1,25 +1,20 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
-  ExternalLink,
-  Calendar,
   BookOpen,
-  Star,
-  Users,
-  Trophy,
+  Calendar,
+  ExternalLink,
   Heart,
+  Star,
+  Trophy,
+  Users,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../Components/ui/card";
-import { Button } from "../../Components/ui/button";
-import { Badge } from "../../Components/ui/badge";
+import ComicDetailSkeleton from "../../Components/ComicDetailSkeleton";
 import Image from "../../Components/Image";
-import Loading from "../../Components/Loading";
 import NavBar from "../../Components/NavBar";
+import { Badge } from "../../Components/ui/badge";
+import { Button } from "../../Components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../../Components/ui/card";
 import { useMangaDetails } from "../../Hooks/useMangaDetails";
 import type { MangaData } from "../../types";
 
@@ -30,12 +25,7 @@ export const Route = createFileRoute("/comic/$id")({
 function ComicDetailsPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const {
-    data: mangaResponse,
-    isLoading,
-    isError,
-    error,
-  } = useMangaDetails(id);
+  const { data: mangaResponse, isLoading, isError, error } = useMangaDetails(id);
 
   const manga: MangaData | undefined = mangaResponse?.data;
 
@@ -51,42 +41,32 @@ function ComicDetailsPage() {
   const getStatusColor = (status?: string) => {
     switch (status?.toLowerCase()) {
       case "finished":
-        return "bg-green-500/20 text-green-400 border-green-500/30";
+        return "info";
       case "publishing":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+        return "kappa";
       case "on hiatus":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+        return "warning";
       case "discontinued":
-        return "bg-red-500/20 text-red-400 border-red-500/30";
+        return "danger";
       default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+        return "muted";
     }
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-kappa-black flex items-center justify-center">
-        <Loading />
-      </div>
-    );
+    return <ComicDetailSkeleton />;
   }
 
   if (isError || !manga) {
     return (
-      <div className="min-h-screen bg-kappa-black flex items-center justify-center">
-        <Card className="bg-kappa-dark-gray border-kappa-gray/20 max-w-md mx-auto">
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <Card className="max-w-md mx-auto">
           <CardContent className="p-6 text-center">
-            <h2 className="text-xl font-bold text-red-400 mb-2">
-              Error Loading Manga
-            </h2>
-            <p className="text-kappa-gray mb-4">
-              {error?.message ||
-                "Unable to load manga details. Please try again later."}
+            <h2 className="text-xl font-bold text-destructive mb-2">Error Loading Manga</h2>
+            <p className="text-muted-foreground mb-4">
+              {error?.message || "Unable to load manga details. Please try again later."}
             </p>
-            <Button
-              onClick={() => navigate({ to: "/" })}
-              className="bg-kappa-green hover:bg-kappa-green/80"
-            >
+            <Button onClick={() => navigate({ to: "/" })} variant="kappa">
               Go Back
             </Button>
           </CardContent>
@@ -96,44 +76,36 @@ function ComicDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-kappa-black text-white">
+    <div className="min-h-screen">
       <NavBar showSearch={false} />
-      <div className="mx-auto px-4 py-8">
+      <main className="mx-auto w-full max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left column - Image and basic info */}
           <div className="lg:col-span-1">
-            <Card className="bg-kappa-dark-gray border-kappa-gray/20 sticky top-8">
+            <Card className="sticky top-8">
               <CardContent className="p-4">
                 {/* Back button, main title, and alternative titles */}
                 <div className="flex items-start gap-2 mb-2">
                   <Button
-                    onClick={() => navigate({ to: "/" })}
-                    variant="ghost"
+                    onClick={() => window.history.back()}
+                    variant="kappaGhost"
                     size="sm"
-                    className="text-kappa-green hover:text-kappa-green/80 hover:bg-kappa-green/10 p-1 w-8 h-8"
+                    className="p-1 w-8 h-8"
+                    aria-label="Go back"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </Button>
-                  <h1 className="text-xl lg:text-2xl font-bold text-kappa-green">
-                    {manga.title}
-                  </h1>
+                  <h1 className="text-xl lg:text-2xl font-bold text-kappa-green">{manga.title}</h1>
                 </div>
                 <div className="flex-1 mb-4">
                   <div className="flex flex-wrap gap-2">
-                    {manga.title_english &&
-                      manga.title_english !== manga.title && (
-                        <Badge
-                          variant="secondary"
-                          className="bg-kappa-gray/20 text-kappa-gray border-kappa-gray/30 text-xs rounded-md"
-                        >
-                          EN: {manga.title_english}
-                        </Badge>
-                      )}
+                    {manga.title_english && manga.title_english !== manga.title && (
+                      <Badge variant="muted" className="text-xs">
+                        EN: {manga.title_english}
+                      </Badge>
+                    )}
                     {manga.title_japanese && (
-                      <Badge
-                        variant="secondary"
-                        className="bg-kappa-gray/20 text-kappa-gray border-kappa-gray/30 text-xs rounded-md"
-                      >
+                      <Badge variant="muted" className="text-xs">
                         JP: {manga.title_japanese}
                       </Badge>
                     )}
@@ -142,18 +114,14 @@ function ComicDetailsPage() {
 
                 <div className="aspect-3/4 mb-4">
                   <Image
-                    src={
-                      manga.images?.jpg?.large_image_url ||
-                      manga.images?.jpg?.image_url ||
-                      ""
-                    }
+                    src={manga.images?.jpg?.large_image_url || manga.images?.jpg?.image_url || ""}
                     alt={manga.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
 
                 <div className="space-y-3">
-                  <Badge className={`w-fit ${getStatusColor(manga.status)}`}>
+                  <Badge variant={getStatusColor(manga.status)} className="w-fit">
                     {manga.status || "Unknown"}
                   </Badge>
 
@@ -179,17 +147,13 @@ function ComicDetailsPage() {
                       <Calendar className="w-4 h-4" />
                       <span>
                         {formatDate(manga.published.from)}
-                        {manga.published.to &&
-                          ` - ${formatDate(manga.published.to)}`}
+                        {manga.published.to && ` - ${formatDate(manga.published.to)}`}
                       </span>
                     </div>
                   )}
 
                   {manga.url && (
-                    <Button
-                      asChild
-                      className="w-full bg-kappa-green hover:bg-kappa-green/80"
-                    >
+                    <Button asChild variant="kappa" className="w-full">
                       <a
                         href={manga.url}
                         target="_blank"
@@ -211,10 +175,10 @@ function ComicDetailsPage() {
             {/* Stats cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {manga.score && (
-                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <Star className="w-6 h-6 text-yellow-400" />
+                      <Star className="w-6 h-6 text-kappa-gold" />
                       <div>
                         <p className="text-lg font-semibold text-kappa-green">
                           {manga.score.toFixed(1)}
@@ -227,14 +191,12 @@ function ComicDetailsPage() {
               )}
 
               {manga.rank && (
-                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <Trophy className="w-6 h-6 text-orange-400" />
+                      <Trophy className="w-6 h-6 text-kappa-orange" />
                       <div>
-                        <p className="text-lg font-semibold text-kappa-green">
-                          #{manga.rank}
-                        </p>
+                        <p className="text-lg font-semibold text-kappa-green">#{manga.rank}</p>
                         <p className="text-sm text-kappa-gray">Rank</p>
                       </div>
                     </div>
@@ -243,10 +205,10 @@ function ComicDetailsPage() {
               )}
 
               {manga.members && (
-                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <Users className="w-6 h-6 text-blue-400" />
+                      <Users className="w-6 h-6 text-kappa-blue" />
                       <div>
                         <p className="text-lg font-semibold text-kappa-green">
                           {manga.members.toLocaleString()}
@@ -259,10 +221,10 @@ function ComicDetailsPage() {
               )}
 
               {manga.favorites && (
-                <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+                <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <Heart className="w-6 h-6 text-red-400" />
+                      <Heart className="w-6 h-6 text-kappa-red" />
                       <div>
                         <p className="text-lg font-semibold text-kappa-green">
                           {manga.favorites.toLocaleString()}
@@ -277,11 +239,9 @@ function ComicDetailsPage() {
 
             {/* Synopsis */}
             {manga.synopsis && (
-              <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">
-                    Synopsis
-                  </CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">Synopsis</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-kappa-gray leading-relaxed whitespace-pre-line">
@@ -293,11 +253,9 @@ function ComicDetailsPage() {
 
             {/* Background */}
             {manga.background && (
-              <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">
-                    Background
-                  </CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">Background</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-kappa-gray leading-relaxed whitespace-pre-line">
@@ -309,20 +267,14 @@ function ComicDetailsPage() {
 
             {/* Authors */}
             {manga.authors && manga.authors.length > 0 && (
-              <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">
-                    Authors
-                  </CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">Authors</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
                     {manga.authors.map((author) => (
-                      <Badge
-                        key={author.mal_id}
-                        variant="secondary"
-                        className="bg-kappa-gray/20 text-kappa-gray hover:bg-kappa-gray/30"
-                      >
+                      <Badge key={author.mal_id} variant="muted">
                         {author.name} ({author.type})
                       </Badge>
                     ))}
@@ -335,24 +287,17 @@ function ComicDetailsPage() {
             {((manga.genres && manga.genres.length > 0) ||
               (manga.themes && manga.themes.length > 0) ||
               (manga.demographics && manga.demographics.length > 0)) && (
-              <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">
-                    Categories
-                  </CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">Categories</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {manga.genres && manga.genres.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
-                        Genres
-                      </h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Genres</h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.genres.map((genre) => (
-                          <Badge
-                            key={genre.mal_id}
-                            className="bg-kappa-green/20 text-kappa-green border-kappa-green/30"
-                          >
+                          <Badge key={genre.mal_id} variant="kappa">
                             {genre.name}
                           </Badge>
                         ))}
@@ -362,16 +307,10 @@ function ComicDetailsPage() {
 
                   {manga.themes && manga.themes.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
-                        Themes
-                      </h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Themes</h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.themes.map((theme) => (
-                          <Badge
-                            key={theme.mal_id}
-                            variant="outline"
-                            className="border-kappa-gray/30 text-kappa-gray"
-                          >
+                          <Badge key={theme.mal_id} variant="muted">
                             {theme.name}
                           </Badge>
                         ))}
@@ -381,16 +320,10 @@ function ComicDetailsPage() {
 
                   {manga.demographics && manga.demographics.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">
-                        Demographics
-                      </h4>
+                      <h4 className="text-sm font-semibold text-kappa-gray mb-2">Demographics</h4>
                       <div className="flex flex-wrap gap-2">
                         {manga.demographics.map((demo) => (
-                          <Badge
-                            key={demo.mal_id}
-                            variant="outline"
-                            className="border-blue-500/30 text-blue-400"
-                          >
+                          <Badge key={demo.mal_id} variant="info">
                             {demo.name}
                           </Badge>
                         ))}
@@ -403,20 +336,14 @@ function ComicDetailsPage() {
 
             {/* Serializations */}
             {manga.serializations && manga.serializations.length > 0 && (
-              <Card className="bg-kappa-dark-gray border-kappa-gray/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl text-kappa-green">
-                    Serializations
-                  </CardTitle>
+                  <CardTitle className="text-xl text-kappa-green">Serializations</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
                     {manga.serializations.map((serialization) => (
-                      <Badge
-                        key={serialization.mal_id}
-                        variant="secondary"
-                        className="bg-purple-500/20 text-purple-400 border-purple-500/30"
-                      >
+                      <Badge key={serialization.mal_id} variant="purple">
                         {serialization.name}
                       </Badge>
                     ))}
@@ -426,7 +353,7 @@ function ComicDetailsPage() {
             )}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

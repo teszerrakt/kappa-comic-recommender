@@ -1,4 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import type { PropsWithChildren } from "react";
+import { createContext, useContext } from "react";
+import { LOCAL_STORAGE } from "../constant";
+import useStorage from "../Hooks/useStorage";
 import type { UserPreference } from "../types";
 
 interface PreferencesContextType {
@@ -8,10 +11,12 @@ interface PreferencesContextType {
 
 const PreferencesContext = createContext<PreferencesContextType | null>(null);
 
-export const PreferencesProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [prefs, setPrefs] = useState<UserPreference[]>([]);
+export const PreferencesProvider = ({ children }: PropsWithChildren) => {
+  const [prefs, setPrefs] = useStorage<UserPreference[]>(
+    LOCAL_STORAGE.USER_PREFERENCES,
+    [],
+    "local",
+  );
   return (
     <PreferencesContext.Provider value={{ prefs, setPrefs }}>
       {children}

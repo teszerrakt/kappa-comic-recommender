@@ -1,5 +1,6 @@
-import SearchBox from "./SearchBox";
+import { Link } from "@tanstack/react-router";
 import kappa from "../Assets/kappa.png";
+import SearchBox from "./SearchBox";
 
 interface NavBarProps {
   showSearch?: boolean;
@@ -7,20 +8,21 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ showSearch = true }) => {
   return (
-    <div className="flex items-center justify-between p-4 text-kappa-gray bg-kappa-dark-gray">
+    <nav className="flex items-center justify-between p-4 text-kappa-gray bg-card">
       <div className="flex items-center">
-        <img
-          className="h-16 mr-4 duration-300 hover:animate-bounce"
-          src={kappa}
-          alt="kappa"
-        />
-        <h1 className="hidden text-6xl font-bold md:inline text-kappa-green">
-          kappa
-        </h1>
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            className="h-12 transition-transform duration-200 hover:scale-105"
+            src={kappa}
+            alt="Kappa logo"
+          />
+          <span className="hidden text-3xl font-bold md:inline text-kappa-green">kappa</span>
+          <span className="text-lg font-bold text-kappa-green md:hidden">kappa</span>
+        </Link>
       </div>
 
       {showSearch && <SearchBox />}
-    </div>
+    </nav>
   );
 };
 

@@ -1,15 +1,15 @@
+import kappa from "../Assets/kappa.png";
+import { SESSION_STORAGE } from "../constant";
+import useStorage from "../Hooks/useStorage";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
-import kappa from "../Assets/kappa.png";
-import useStorage from "../Hooks/useStorage";
-import { SESSION_STORAGE } from "../constant";
 
 interface TutorialModalProps {
   isVisible: boolean;
@@ -17,11 +17,7 @@ interface TutorialModalProps {
   forceShow?: boolean;
 }
 
-const TutorialModal: React.FC<TutorialModalProps> = ({
-  isVisible,
-  onClose,
-  forceShow = false,
-}) => {
+const TutorialModal: React.FC<TutorialModalProps> = ({ isVisible, onClose, forceShow = false }) => {
   const [isModalShownOnce, setIsModalShownOnce] = useStorage<boolean>(
     SESSION_STORAGE.SHOW_TUTORIAL_MODAL,
     false,
@@ -38,7 +34,7 @@ const TutorialModal: React.FC<TutorialModalProps> = ({
 
   return (
     <Dialog open={shouldShowModal} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="bg-kappa-dark-gray border-kappa-green max-w-[500px]">
+      <DialogContent className="bg-card border-kappa-green">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold text-center text-kappa-green">
             Welcome to Kappa
@@ -50,22 +46,19 @@ const TutorialModal: React.FC<TutorialModalProps> = ({
 
         <div className="flex flex-col justify-center my-4">
           <img
-            className="self-center h-32 duration-300"
+            className="self-center h-32 transition-transform duration-200 hover:scale-105"
             src={kappa}
-            alt="kappa"
+            alt="Kappa mascot"
           />
           <p className="px-2 mt-4 text-center text-kappa-gray">
             To get your comic recommendation, please rate at least{" "}
-            <b className="text-kappa-green">five titles</b> and then you can
-            click K-Means or DBSCAN buttons that will appear.
+            <b className="text-kappa-green">five titles</b> and then you can click K-Means or DBSCAN
+            buttons that will appear.
           </p>
         </div>
 
         <DialogFooter>
-          <Button
-            onClick={handleClose}
-            className="w-full bg-kappa-green hover:brightness-90 text-kappa-black font-bold"
-          >
+          <Button onClick={handleClose} variant="kappa" className="w-full font-bold">
             I Understand
           </Button>
         </DialogFooter>
