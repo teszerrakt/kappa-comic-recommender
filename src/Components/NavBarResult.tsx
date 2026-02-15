@@ -1,9 +1,14 @@
+import { Link } from "@tanstack/react-router";
+import { Home } from "lucide-react";
+import { Button } from "./ui/button";
 import kappa from "../Assets/kappa.png";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import type { Algorithm } from "../types";
 
-const NavBarResult = ({ algorithm }) => {
+interface NavBarResultProps {
+  algorithm: Algorithm;
+}
+
+const NavBarResult: React.FC<NavBarResultProps> = ({ algorithm }) => {
   return (
     <div className="flex items-center justify-between p-4 text-kappa-gray bg-kappa-dark-gray">
       <div className="flex items-center">
@@ -17,9 +22,13 @@ const NavBarResult = ({ algorithm }) => {
         </h1>
       </div>
       <Link to="/">
-        <button className="px-3 py-2 text-2xl font-bold duration-300 border rounded-xl border-kappa-green text-kappa-green hover:bg-kappa-black">
-          <FontAwesomeIcon icon={faHome} />
-        </button>
+        <Button
+          variant="outline"
+          size="lg"
+          className="text-2xl font-bold bg-transparent border-kappa-green text-kappa-green hover:bg-kappa-black"
+        >
+          <Home className="h-6 w-6" />
+        </Button>
       </Link>
     </div>
   );

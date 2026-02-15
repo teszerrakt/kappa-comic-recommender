@@ -1,36 +1,20 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
-  plugins: [react()],
-  esbuild: {
-    include: /src\/.*\.(js|ts|jsx|tsx)$/,
-    exclude: []
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-        '.ts': 'tsx',
-        '.tsx': 'tsx'
-      }
-    }
-  },
-  css: {
-    postcss: {
-      plugins: [tailwindcss, autoprefixer]
-    }
-  },
-  define: {
-    // For compatibility with existing code
-    'process.env': {}
-  },
-  envPrefix: 'VITE_',
+  plugins: [
+    tanstackRouter({
+      routesDirectory: "./src/routes",
+      generatedRouteTree: "./src/routeTree.gen.ts",
+    }),
+    tailwindcss(),
+    react(),
+  ],
   resolve: {
     alias: {
-      '@': '/src'
-    }
-  }
-})
+      "@": "/src",
+    },
+  },
+});

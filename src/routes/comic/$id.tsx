@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ExternalLink,
@@ -14,17 +14,21 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../Components/ui/card";
-import { Button } from "../Components/ui/button";
-import { Badge } from "../Components/ui/badge";
-import Image from "../Components/Image";
-import Loading from "../Components/Loading";
-import NavBar from "../Components/NavBar";
-import { useMangaDetails } from "../Hooks/useMangaDetails";
-import { MangaData } from "../types";
+} from "../../Components/ui/card";
+import { Button } from "../../Components/ui/button";
+import { Badge } from "../../Components/ui/badge";
+import Image from "../../Components/Image";
+import Loading from "../../Components/Loading";
+import NavBar from "../../Components/NavBar";
+import { useMangaDetails } from "../../Hooks/useMangaDetails";
+import type { MangaData } from "../../types";
 
-const ComicDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+export const Route = createFileRoute("/comic/$id")({
+  component: ComicDetailsPage,
+});
+
+function ComicDetailsPage() {
+  const { id } = Route.useParams();
   const navigate = useNavigate();
   const {
     data: mangaResponse,
@@ -80,7 +84,7 @@ const ComicDetails: React.FC = () => {
                 "Unable to load manga details. Please try again later."}
             </p>
             <Button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate({ to: "/" })}
               className="bg-kappa-green hover:bg-kappa-green/80"
             >
               Go Back
@@ -103,14 +107,14 @@ const ComicDetails: React.FC = () => {
                 {/* Back button, main title, and alternative titles */}
                 <div className="flex items-start gap-2 mb-2">
                   <Button
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate({ to: "/" })}
                     variant="ghost"
                     size="sm"
                     className="text-kappa-green hover:text-kappa-green/80 hover:bg-kappa-green/10 p-1 w-8 h-8"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </Button>
-                  <h1 className="text-xl lg:text-2xl font-bold text-kappa-green ">
+                  <h1 className="text-xl lg:text-2xl font-bold text-kappa-green">
                     {manga.title}
                   </h1>
                 </div>
@@ -136,7 +140,7 @@ const ComicDetails: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="aspect-[3/4] mb-4">
+                <div className="aspect-3/4 mb-4">
                   <Image
                     src={
                       manga.images?.jpg?.large_image_url ||
@@ -425,6 +429,4 @@ const ComicDetails: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default ComicDetails;
+}

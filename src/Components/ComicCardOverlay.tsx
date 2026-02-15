@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 interface ComicCardOverlayProps {
@@ -8,30 +8,36 @@ interface ComicCardOverlayProps {
   children: React.ReactNode;
 }
 
-const ComicCardOverlay: React.FC<ComicCardOverlayProps> = ({ id, title, children }) => {
+const ComicCardOverlay: React.FC<ComicCardOverlayProps> = ({
+  id,
+  children,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate(`/comic/${id}`);
+    navigate({ to: "/comic/$id", params: { id } });
   };
 
   return (
-    <div 
+    <div
       className="relative group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {children}
-      
+
       {/* Overlay */}
-      <div 
+      <div
         className={`
           absolute inset-0 bg-black/70 flex items-center justify-center 
           transition-opacity duration-300 rounded-xl cursor-pointer
-          ${isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+          ${isHovered ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
         onClick={handleViewDetails}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleViewDetails();
+        }}
       >
         <div className="flex items-center gap-2 text-kappa-green font-semibold text-lg">
           <span>View Details</span>

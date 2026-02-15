@@ -2,13 +2,33 @@ import { useState, useEffect } from "react";
 
 type StorageType = "session" | "local";
 
-const useStorage = <T,>(
-  key: string, 
-  defaultValue: T, 
-  storageType: StorageType = "session"
+const getStorage = (storageType: StorageType): Storage => {
+  return storageType === "session" ? sessionStorage : localStorage;
+};
+
+const getStorageValue = <T>(storageType: StorageType, key: string): T | null => {
+  const storage = getStorage(storageType);
+  const storedValue = storage.getItem(key);
+  try {
+    return storedValue ? (JSON.parse(storedValue) as T) : null;
+  } catch {
+    return storedValue as T;
+  }
+};
+
+const setStorageValue = <T>(storageType: StorageType, key: string, value: T): void => {
+  const storage = getStorage(storageType);
+  const serializedValue = JSON.stringify(value);
+  storage.setItem(key, serializedValue);
+};
+
+const useStorage = <T>(
+  key: string,
+  defaultValue: T,
+  storageType: StorageType = "session",
 ): [T, (newValue: T) => void] => {
   const [value, setValue] = useState<T>(() => {
-    const storedValue = getStorageValue(storageType, key);
+    const storedValue = getStorageValue<T>(storageType, key);
     return storedValue !== null ? storedValue : defaultValue;
   });
 
@@ -21,26 +41,6 @@ const useStorage = <T,>(
   };
 
   return [value, handleChange];
-};
-
-const getStorageValue = (storageType: StorageType, key: string): any => {
-  const storage = getStorage(storageType);
-  const storedValue = storage.getItem(key);
-  try {
-    return storedValue ? JSON.parse(storedValue) : null;
-  } catch (error) {
-    return storedValue;
-  }
-};
-
-const setStorageValue = (storageType: StorageType, key: string, value: any): void => {
-  const storage = getStorage(storageType);
-  const serializedValue = JSON.stringify(value);
-  storage.setItem(key, serializedValue);
-};
-
-const getStorage = (storageType: StorageType): Storage => {
-  return storageType === "session" ? sessionStorage : localStorage;
 };
 
 export default useStorage;
